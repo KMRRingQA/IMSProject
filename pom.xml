@@ -44,6 +44,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.name}</finalName>
 		<plugins>
 		<!-- Creates a jar for the code (does not contain other dependencies which are needed for the project to run out of the box) -->
 			<plugin>

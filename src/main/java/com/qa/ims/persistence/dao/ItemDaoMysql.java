@@ -44,7 +44,7 @@ public class ItemDaoMysql implements Dao<Item> {
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("insert into items(name, price, stock) values('" + item.getName() + "','"
 					+ item.getPrice() + "','" + item.getStock() + "')");
-			return readLatest();
+			LOGGER.info(readLatest());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

@@ -28,14 +28,33 @@ public class ItemController implements CrudController<Item> {
 	 */
 	@Override
 	public Item create() {
-		LOGGER.info("Please enter item name");
-		String name = getInput();
 
-		LOGGER.info("Please enter the price of the item");
-		BigDecimal price = BigDecimal.valueOf(Double.parseDouble(getInput()));
+		String name = null;
+		BigDecimal price = null;
+		Long stock = null;
 
-		LOGGER.info("Please enter the current stock size of the item");
-		Long stock = Long.parseLong(getInput());
+		do {
+			LOGGER.info("Please enter item name");
+			name = getInput();
+		} while (name.isEmpty());
+
+		do {
+			try {
+				LOGGER.info("Please enter the price of the item (€)");
+				price = BigDecimal.valueOf(Double.parseDouble(getInput()));
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please enter a decimal number (only).");
+			}
+		} while (price == null || price.intValue() < 0);
+
+		do {
+			try {
+				LOGGER.info("Please enter the current stock size of the item");
+				stock = Long.parseLong(getInput());
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please enter an integer (only).");
+			}
+		} while (stock == null || stock < 0);
 
 		Item item = itemService.create(new Item(name, price, stock));
 		LOGGER.info("Item created");
@@ -73,17 +92,44 @@ public class ItemController implements CrudController<Item> {
 	 */
 	@Override
 	public Item update() {
-		LOGGER.info("Please enter the id of the customer you would like to update");
-		Long id = Long.valueOf(getInput());
+		Long id = null;
+		String name = null;
+		BigDecimal price = null;
+		Long stock = null;
 
-		LOGGER.info("Please enter item name");
-		String name = getInput();
+		do {
+			try {
+				LOGGER.info("Please enter the id of the customer you would like to update");
+				id = Long.valueOf(getInput());
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please enter an integer (only).");
+			}
+		} while (id == null);
 
-		LOGGER.info("Please enter the price of the item");
-		BigDecimal price = BigDecimal.valueOf(Double.parseDouble(getInput()));
+		LOGGER.info("You are going to be updating item with ID = " + id);
 
-		LOGGER.info("Please enter the current stock size of the item");
-		Long stock = Long.parseLong(getInput());
+		do {
+			LOGGER.info("Please enter item name");
+			name = getInput();
+		} while (name.isEmpty());
+
+		do {
+			try {
+				LOGGER.info("Please enter the price of the item (€)");
+				price = BigDecimal.valueOf(Double.parseDouble(getInput()));
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please enter a decimal number (only).");
+			}
+		} while (price == null || price.intValue() < 0);
+
+		do {
+			try {
+				LOGGER.info("Please enter the current stock size of the item");
+				stock = Long.parseLong(getInput());
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please enter an integer (only).");
+			}
+		} while (stock == null || stock < 0);
 
 		Item item = itemService.create(new Item(id, name, price, stock));
 		LOGGER.info("Customer Updated");

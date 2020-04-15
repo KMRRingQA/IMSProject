@@ -43,6 +43,7 @@ public class OrderController implements CrudController<Order> {
 
 		boolean format;
 		boolean exception;
+		String dateFormat = "Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.";
 		LOGGER.info(
 				"Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
 		do {
@@ -53,17 +54,16 @@ public class OrderController implements CrudController<Order> {
 				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
 						|| Integer.valueOf(date.split("-")[1]) > 12 || Integer.valueOf(date.split("-")[2]) > 31)) {
 					format = false;
-					System.out.println(
-							"Please follow the input format, or leave it blank to default to the current date.");
+					LOGGER.info(dateFormat);
 				}
 			} catch (ArrayIndexOutOfBoundsException aioobe) {
-				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				LOGGER.info(dateFormat);
 				exception = true;
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				LOGGER.info(dateFormat);
 				exception = true;
 			} catch (Exception e) {
-				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				LOGGER.info(dateFormat);
 				exception = true;
 			}
 		} while ((format == false && date != null) || exception == true);
@@ -115,6 +115,7 @@ public class OrderController implements CrudController<Order> {
 		Long cust_id = null;
 		String date = null;
 		BigDecimal totalPrice = BigDecimal.valueOf(0);
+		String dateFormat = "Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.";
 
 		do {
 			try {
@@ -146,16 +147,16 @@ public class OrderController implements CrudController<Order> {
 				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
 						|| Integer.valueOf(date.split("-")[1]) > 12 || Integer.valueOf(date.split("-")[2]) > 31)) {
 					format = false;
-					LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+					LOGGER.info(dateFormat);
 				}
 			} catch (ArrayIndexOutOfBoundsException aioobe) {
-				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				LOGGER.info(dateFormat);
 				exception = true;
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				LOGGER.info(dateFormat);
 				exception = true;
 			} catch (Exception e) {
-				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				LOGGER.info(dateFormat);
 				exception = true;
 			}
 		} while ((format == false && date != null) || exception == true);

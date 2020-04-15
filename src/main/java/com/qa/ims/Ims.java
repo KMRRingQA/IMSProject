@@ -50,9 +50,9 @@ public class Ims {
 	}
 
 	public void imsSystem() {
-		LOGGER.info("What is your username");
+		LOGGER.info("Enter username");
 		String username = Utils.getInput();
-		LOGGER.info("What is your password");
+		LOGGER.info("Enter password");
 		String password = Utils.getInput();
 
 		init(username, password);

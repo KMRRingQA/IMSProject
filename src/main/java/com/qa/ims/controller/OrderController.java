@@ -43,12 +43,12 @@ public class OrderController implements CrudController<Order> {
 
 		boolean format;
 		boolean exception;
+		LOGGER.info(
+				"Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
 		do {
 			exception = false;
 			format = true;
 			try {
-				LOGGER.info(
-						"Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
 				date = getInput();
 				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
 						|| Integer.valueOf(date.split("-")[1]) > 12 || Integer.valueOf(date.split("-")[2]) > 31)) {
@@ -136,12 +136,12 @@ public class OrderController implements CrudController<Order> {
 
 		boolean format;
 		boolean exception;
+		LOGGER.info(
+				"Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
 		do {
 			exception = false;
 			format = true;
 			try {
-				LOGGER.info(
-						"Please enter a (new) Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
 				date = getInput();
 				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
 						|| Integer.valueOf(date.split("-")[1]) > 12 || Integer.valueOf(date.split("-")[2]) > 31)) {

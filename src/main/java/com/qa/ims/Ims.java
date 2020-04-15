@@ -64,7 +64,11 @@ public class Ims {
 			Domain domain = Domain.getDomain();
 			LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
 
-			Action.printActions();
+			if (domain.name().toLowerCase().equals("order")) {
+				Action.printOrderActions();
+			} else {
+				Action.printActions();
+			}
 			Action action = Action.getAction();
 
 			switch (domain) {
@@ -79,16 +83,27 @@ public class Ims {
 				doAction(itemController, action);
 				break;
 			case ORDER:
-				OrderController orderController = new OrderController(
-						new OrderServices(new OrderDaoMysql(username, password)));
-				doAction(orderController, action);
+				String name = action.name().toLowerCase();
+				if (name.equals("create") || name.equals("read") || name.equals("update") || name.equals("delete")) {
+					OrderController orderController = new OrderController(
+							new OrderServices(new OrderDaoMysql(username, password)));
+					doAction(orderController, action);
+				} else if (name.equals("additem") || name.equals("removeitem") || name.equals("calculateorderprice")
+						|| name.equals("readitems")) {
+					System.out.println("this is a special action" + action.name());
+					OrderListController orderListController = new OrderListController(
+							new OrderListServices(new OrderListDaoMysql(username, password)));
+					doAction(orderListController, action);
+				}
 				break;
 			case STOP:
 				break;
 			default:
 				break;
 			}
-			LOGGER.info("Task completed succesfully.\n");
+			if (!action.name().equalsIgnoreCase("return")) {
+				LOGGER.info("Task completed succesfully.\n");
+			}
 		}
 	}
 

@@ -10,11 +10,48 @@ import com.qa.ims.utils.Utils;
  *
  */
 public enum Action {
-	CREATE("To save a new item into the database"), READ("To read an item from the database"),
-	UPDATE("To change an item already in the database"), DELETE("To remove an item from the database"),
-	RETURN("To return to domain selection");
+	RETURN("To return to domain selection"), CREATE("To save a new item into the database"),
+	READ("To read an item from the database"), UPDATE("To change an item already in the database"),
+	DELETE("To remove an item from the database"), ADDITEM("To add an item to an existing order"),
+	DELETEITEM("To delete an item from an existing order"), READITEMS("To show all items in an existing order"),
+	CALCULATEORDERPRICE("Calculates the current price on an existing order");
 
 	public static final Logger LOGGER = Logger.getLogger(Action.class);
+
+	/**
+	 * Gets an action based on a users input. If user enters a non-specified
+	 * enumeration, it will ask for another input.
+	 *
+	 * @return Action type
+	 */
+	public static Action getAction() {
+		Action action;
+		while (true) {
+			try {
+				action = Action.valueOf(Utils.getInput().toUpperCase());
+				break;
+			} catch (IllegalArgumentException e) {
+				LOGGER.error("Invalid selection please try again");
+			}
+		}
+		return action;
+	}
+
+	/**
+	 * Prints out all posible actions
+	 */
+	public static void printActions() {
+		Action[] action = Action.values();
+		for (int i = 0; i < 5; i++) {
+			LOGGER.info(action[i].getDescription());
+		}
+	}
+
+	public static void printOrderActions() {
+		for (Action action : Action.values()) {
+			LOGGER.info(action.getDescription());
+		}
+	}
 
 	private String description;
 
@@ -30,34 +67,6 @@ public enum Action {
 	 */
 	public String getDescription() {
 		return this.name() + ": " + this.description;
-	}
-
-	/**
-	 * Prints out all posible actions
-	 */
-	public static void printActions() {
-		for (Action action : Action.values()) {
-			LOGGER.info(action.getDescription());
-		}
-	}
-
-	/**
-	 * Gets an action based on a users input. If user enters a non-specified
-	 * enumeration, it will ask for another input.
-	 * 
-	 * @return Action type
-	 */
-	public static Action getAction() {
-		Action action;
-		while (true) {
-			try {
-				action = Action.valueOf(Utils.getInput().toUpperCase());
-				break;
-			} catch (IllegalArgumentException e) {
-				LOGGER.error("Invalid selection please try again");
-			}
-		}
-		return action;
 	}
 
 }

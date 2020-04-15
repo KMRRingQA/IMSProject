@@ -1,10 +1,11 @@
 package com.qa.ims.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
+import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.services.CrudServices;
 import com.qa.ims.utils.Utils;
 
@@ -27,19 +28,47 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order create() {
-		String firstName = null;
-		String surname = null;
-		do {
-			LOGGER.info("Please enter a first name");
-			firstName = getInput();
-		} while (firstName.isEmpty());
+		Long cust_id = null;
+		String date = null;
+		BigDecimal totalPrice = BigDecimal.valueOf(0);
 
 		do {
-			LOGGER.info("Please enter a surname");
-			surname = getInput();
-		} while (surname.isEmpty());
+			try {
+				LOGGER.info("Please enter the customer ID associated with the Order.");
+				cust_id = Long.valueOf(getInput());
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please enter an integer (only).");
+			}
+		} while (cust_id == null || cust_id < 0);
 
-		Order order = orderService.create(new Order(firstName, surname));
+		boolean format;
+		boolean exception;
+		do {
+			exception = false;
+			format = true;
+			try {
+				LOGGER.info(
+						"Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
+				date = getInput();
+				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
+						|| Integer.valueOf(date.split("-")[1]) > 12 || Integer.valueOf(date.split("-")[2]) > 31)) {
+					format = false;
+					System.out.println(
+							"Please follow the input format, or leave it blank to default to the current date.");
+				}
+			} catch (ArrayIndexOutOfBoundsException aioobe) {
+				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				exception = true;
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				exception = true;
+			} catch (Exception e) {
+				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				exception = true;
+			}
+		} while ((format == false && date != null) || exception == true);
+
+		Order order = orderService.create(new Order(cust_id, date, totalPrice));
 		LOGGER.info("Order created");
 		return order;
 	}
@@ -52,7 +81,7 @@ public class OrderController implements CrudController<Order> {
 		Long id = null;
 		do {
 			try {
-				LOGGER.info("Please enter the id of the customer you would like to delete");
+				LOGGER.info("Please enter the id of the order you would like to delete");
 				id = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
@@ -82,30 +111,56 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order update() {
-		Long id = null;
-		String firstName = null;
-		String surname = null;
+		Long order_id = null;
+		Long cust_id = null;
+		String date = null;
+		BigDecimal totalPrice = BigDecimal.valueOf(0);
 
 		do {
 			try {
-				LOGGER.info("Please enter the id of the customer you would like to update");
-				id = Long.valueOf(getInput());
+				LOGGER.info("Please enter the Order ID associated with the Order.");
+				order_id = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info("Please enter a decimal number (only).");
 			}
-		} while (id == null);
+		} while (order_id == null || order_id < 0);
 
 		do {
-			LOGGER.info("Please enter a first name");
-			firstName = getInput();
-		} while (firstName == null);
+			try {
+				LOGGER.info("Please enter the (new) Customer ID associated with the Order.");
+				cust_id = Long.valueOf(getInput());
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please enter a decimal number (only).");
+			}
+		} while (cust_id == null || cust_id < 0);
 
+		boolean format;
+		boolean exception;
 		do {
-			LOGGER.info("Please enter a surname");
-			surname = getInput();
-		} while (surname == null);
+			exception = false;
+			format = true;
+			try {
+				LOGGER.info(
+						"Please enter a (new) Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
+				date = getInput();
+				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
+						|| Integer.valueOf(date.split("-")[1]) > 12 || Integer.valueOf(date.split("-")[2]) > 31)) {
+					format = false;
+					LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				}
+			} catch (ArrayIndexOutOfBoundsException aioobe) {
+				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				exception = true;
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				exception = true;
+			} catch (Exception e) {
+				LOGGER.info("Please follow the input format, or leave it blank to default to the current date.");
+				exception = true;
+			}
+		} while ((format == false && date != null) || exception == true);
 
-		Order order = orderService.update(new Order(id, firstName, surname));
+		Order order = orderService.update(new Order(order_id, cust_id, date, totalPrice));
 		LOGGER.info("Order Updated");
 		return order;
 	}

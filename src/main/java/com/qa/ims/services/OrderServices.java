@@ -2,20 +2,20 @@ package com.qa.ims.services;
 
 import java.util.List;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
 import com.qa.ims.persistence.dao.Dao;
+import com.qa.ims.persistence.domain.Order;
 
 public class OrderServices implements CrudServices<Order> {
 
 	private Dao<Order> orderDao;
 
-	public OrderServices(Dao<Order> customerDao) {
-		this.orderDao = customerDao;
+	public OrderServices(Dao<Order> orderDao) {
+		this.orderDao = orderDao;
 	}
 
 	@Override
-	public Order create(Order customer) {
-		return orderDao.create(customer);
+	public Order create(Order order) {
+		return orderDao.create(order);
 	}
 
 	@Override
@@ -29,8 +29,8 @@ public class OrderServices implements CrudServices<Order> {
 	}
 
 	@Override
-	public Order update(Order customer) {
-		return orderDao.update(customer);
+	public Order update(Order order) {
+		return orderDao.update(order);
 	}
 
 }

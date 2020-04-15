@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Customer;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
 import com.qa.ims.services.CrudServices;
 import com.qa.ims.utils.Utils;
 
@@ -12,21 +12,21 @@ import com.qa.ims.utils.Utils;
  * Takes in customer details for CRUD functionality
  *
  */
-public class OrderController implements CrudController<Customer> {
+public class OrderController implements CrudController<Order> {
 
 	public static final Logger LOGGER = Logger.getLogger(OrderController.class);
 
-	private CrudServices<Customer> customerService;
+	private CrudServices<Order> orderService;
 
-	public OrderController(CrudServices<Customer> customerService) {
-		this.customerService = customerService;
+	public OrderController(CrudServices<Order> customerService) {
+		this.orderService = customerService;
 	}
 
 	/**
 	 * Creates a customer by taking in user input
 	 */
 	@Override
-	public Customer create() {
+	public Order create() {
 		String firstName = null;
 		String surname = null;
 		do {
@@ -39,9 +39,9 @@ public class OrderController implements CrudController<Customer> {
 			surname = getInput();
 		} while (surname.isEmpty());
 
-		Customer customer = customerService.create(new Customer(firstName, surname));
-		LOGGER.info("Customer created");
-		return customer;
+		Order order = orderService.create(new Order(firstName, surname));
+		LOGGER.info("Order created");
+		return order;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class OrderController implements CrudController<Customer> {
 				LOGGER.info("Please enter an integer (only).");
 			}
 		} while (id == null);
-		customerService.delete(id);
+		orderService.delete(id);
 	}
 
 	String getInput() {
@@ -69,19 +69,19 @@ public class OrderController implements CrudController<Customer> {
 	 * Reads all customers to the logger
 	 */
 	@Override
-	public List<Customer> readAll() {
-		List<Customer> customers = customerService.readAll();
-		for (Customer customer : customers) {
-			LOGGER.info(customer.toString());
+	public List<Order> readAll() {
+		List<Order> orders = orderService.readAll();
+		for (Order order : orders) {
+			LOGGER.info(order.toString());
 		}
-		return customers;
+		return orders;
 	}
 
 	/**
 	 * Updates an existing customer by taking in user input
 	 */
 	@Override
-	public Customer update() {
+	public Order update() {
 		Long id = null;
 		String firstName = null;
 		String surname = null;
@@ -105,9 +105,9 @@ public class OrderController implements CrudController<Customer> {
 			surname = getInput();
 		} while (surname == null);
 
-		Customer customer = customerService.update(new Customer(id, firstName, surname));
-		LOGGER.info("Customer Updated");
-		return customer;
+		Order order = orderService.update(new Order(id, firstName, surname));
+		LOGGER.info("Order Updated");
+		return order;
 	}
 
 }

@@ -99,14 +99,12 @@ public class ItemController implements CrudController<Item> {
 
 		do {
 			try {
-				LOGGER.info("Please enter the id of the customer you would like to update");
+				LOGGER.info("Please enter the id of the item you would like to update");
 				id = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
 			}
 		} while (id == null);
-
-		LOGGER.info("You are going to be updating item with ID = " + id);
 
 		do {
 			LOGGER.info("Please enter item name");

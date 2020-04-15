@@ -1,20 +1,28 @@
 package com.qa.ims.persistence.domain;
 
+import java.math.BigDecimal;
+
 public class Order {
 
-	private Long id;
-	private String firstName;
-	private String surname;
+	private Long order_id;
 
-	public Order(Long id, String firstName, String surname) {
-		this.id = id;
-		this.firstName = firstName;
-		this.surname = surname;
+	private Long cust_id;
+
+	private String date;
+
+	private BigDecimal totalPrice;
+
+	public Order(Long order_id, Long cust_id, String date, BigDecimal totalPrice) {
+		this.order_id = order_id;
+		this.cust_id = cust_id;
+		this.date = date;
+		this.totalPrice = totalPrice;
 	}
 
-	public Order(String firstName, String surname) {
-		this.firstName = firstName;
-		this.surname = surname;
+	public Order(Long cust_id, String date, BigDecimal totalPrice) {
+		this.cust_id = cust_id;
+		this.date = date;
+		this.totalPrice = totalPrice;
 	}
 
 	@Override
@@ -25,62 +33,82 @@ public class Order {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+
 		Order other = (Order) obj;
-		if (firstName == null) {
-			if (other.firstName != null)
+
+		if (order_id == null) {
+			if (other.order_id != null)
 				return false;
-		} else if (!firstName.equals(other.firstName))
+		} else if (!order_id.equals(other.order_id))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+
+		if (cust_id == null) {
+			if (other.cust_id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!cust_id.equals(other.cust_id))
 			return false;
-		if (surname == null) {
-			if (other.surname != null)
+
+		if (date == null) {
+			if (other.date != null)
 				return false;
-		} else if (!surname.equals(other.surname))
+		} else if (!date.equals(other.date))
 			return false;
+
+		if (totalPrice == null) {
+			if (other.totalPrice != null)
+				return false;
+		} else if (!totalPrice.equals(other.totalPrice))
+			return false;
+
 		return true;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public Long getCust_id() {
+		return cust_id;
 	}
 
-	public Long getId() {
-		return id;
+	public String getDate() {
+		return date;
 	}
 
-	public String getSurname() {
-		return surname;
+	public Long getOrder_id() {
+		return order_id;
+	}
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
+		result = prime * result + ((order_id == null) ? 0 : order_id.hashCode());
+		result = prime * result + ((cust_id == null) ? 0 : cust_id.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((totalPrice == null) ? 0 : totalPrice.hashCode());
 		return result;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setCust_id(Long cust_id) {
+		this.cust_id = cust_id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setOrder_id(Long order_id) {
+		this.order_id = order_id;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	@Override
 	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+		return "order id:" + order_id + " cust id:" + cust_id + " date:" + date + " total Price:" + totalPrice;
 	}
 
 }

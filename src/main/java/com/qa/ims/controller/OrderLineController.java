@@ -28,8 +28,8 @@ public class OrderLineController {
 	}
 
 	public OrderLine changeItems() {
-		Long order_id = null;
-		Long item_id = null;
+		Long orderId = null;
+		Long itemId = null;
 		Long quantity = null;
 		String action = null;
 
@@ -43,20 +43,20 @@ public class OrderLineController {
 		do {
 			try {
 				LOGGER.info("Please enter the id of the order you would like add/remove an item to/from");
-				order_id = Long.valueOf(getInput());
+				orderId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
 			}
-		} while (order_id == null || order_id < 0);
+		} while (orderId == null || orderId < 0);
 
 		do {
 			try {
 				LOGGER.info("Please enter the id of the item you would like to add/remove");
-				item_id = Long.valueOf(getInput());
+				itemId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
 			}
-		} while (item_id == null || item_id < 0);
+		} while (itemId == null || itemId < 0);
 
 		if (action.equals("add")) {
 			quantity = 1l;
@@ -68,27 +68,26 @@ public class OrderLineController {
 					if (!tempString.isEmpty()) {
 						quantity = Long.valueOf(tempString);
 					}
-				} catch (NumberFormatException | NullPointerException nfe_npe) {
+				} catch (NumberFormatException | NullPointerException nfeNpe) {
 					LOGGER.info("Please enter an integer (only).");
 					quantity = 1l;
 				}
 			} while (quantity == null || quantity < 1l);
 		}
-		OrderLine orderLine = orderLineService.changeItems(new OrderLine(order_id, item_id, quantity));
-		return orderLine;
+		return orderLineService.changeItems(new OrderLine(orderId, itemId, quantity));
 	}
 
 	public List<OrderLine> readItemsInOrder() {
-		Long order_id = null;
+		Long orderId = null;
 		do {
 			try {
 				LOGGER.info("Please enter the id of the order you would like read");
-				order_id = Long.valueOf(getInput());
+				orderId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
 			}
-		} while (order_id == null || order_id < 0);
-		List<OrderLine> orderLines = orderLineService.readOrder(order_id);
+		} while (orderId == null || orderId < 0);
+		List<OrderLine> orderLines = orderLineService.readOrder(orderId);
 		for (OrderLine orderLine : orderLines) {
 			LOGGER.info(orderLine.toString());
 		}
@@ -97,17 +96,17 @@ public class OrderLineController {
 	}
 
 	public BigDecimal calculateOrderPrice() {
-		Long order_id = null;
+		Long orderId = null;
 		do {
 			try {
 				LOGGER.info("Please enter the id of the order you would like calculate the total cost for");
-				order_id = Long.valueOf(getInput());
+				orderId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
 			}
-		} while (order_id == null || order_id < 0);
-		BigDecimal totalCost = orderLineService.calculate(order_id);
-		LOGGER.info("Order with id " + order_id + " has a total cost of: £" + totalCost);
+		} while (orderId == null || orderId < 0);
+		BigDecimal totalCost = orderLineService.calculate(orderId);
+		LOGGER.info("Order with id " + orderId + " has a total cost of: £" + totalCost);
 		return totalCost;
 	}
 }

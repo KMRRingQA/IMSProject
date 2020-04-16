@@ -28,18 +28,18 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order create() {
-		Long cust_id = null;
+		Long custId = null;
 		String date = null;
 		BigDecimal totalPrice = BigDecimal.valueOf(0);
 
 		do {
 			try {
 				LOGGER.info("Please enter the customer ID associated with the Order.");
-				cust_id = Long.valueOf(getInput());
+				custId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
 			}
-		} while (cust_id == null || cust_id < 0);
+		} while (custId == null || custId < 0);
 
 		boolean format;
 		boolean exception;
@@ -56,19 +56,13 @@ public class OrderController implements CrudController<Order> {
 					format = false;
 					LOGGER.info(dateFormat);
 				}
-			} catch (ArrayIndexOutOfBoundsException aioobe) {
-				LOGGER.info(dateFormat);
-				exception = true;
-			} catch (NumberFormatException nfe) {
-				LOGGER.info(dateFormat);
-				exception = true;
-			} catch (Exception e) {
+			} catch (ArrayIndexOutOfBoundsException | NumberFormatException aioobeNfe) {
 				LOGGER.info(dateFormat);
 				exception = true;
 			}
-		} while ((format == false && date != null) || exception == true);
+		} while ((!format && date != null) || exception);
 
-		Order order = orderService.create(new Order(cust_id, date, totalPrice));
+		Order order = orderService.create(new Order(custId, date, totalPrice));
 		LOGGER.info("Order created");
 		return order;
 	}
@@ -111,8 +105,8 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order update() {
-		Long order_id = null;
-		Long cust_id = null;
+		Long orderId = null;
+		Long custId = null;
 		String date = null;
 		BigDecimal totalPrice = BigDecimal.valueOf(0);
 		String dateFormat = "Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.";
@@ -120,20 +114,20 @@ public class OrderController implements CrudController<Order> {
 		do {
 			try {
 				LOGGER.info("Please enter the Order ID associated with the Order.");
-				order_id = Long.valueOf(getInput());
+				orderId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter a decimal number (only).");
 			}
-		} while (order_id == null || order_id < 0);
+		} while (orderId == null || orderId < 0);
 
 		do {
 			try {
 				LOGGER.info("Please enter the (new) Customer ID associated with the Order.");
-				cust_id = Long.valueOf(getInput());
+				custId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter a decimal number (only).");
 			}
-		} while (cust_id == null || cust_id < 0);
+		} while (custId == null || custId < 0);
 
 		boolean format;
 		boolean exception;
@@ -149,19 +143,13 @@ public class OrderController implements CrudController<Order> {
 					format = false;
 					LOGGER.info(dateFormat);
 				}
-			} catch (ArrayIndexOutOfBoundsException aioobe) {
-				LOGGER.info(dateFormat);
-				exception = true;
-			} catch (NumberFormatException nfe) {
-				LOGGER.info(dateFormat);
-				exception = true;
-			} catch (Exception e) {
+			} catch (ArrayIndexOutOfBoundsException | NumberFormatException aioobeNfe) {
 				LOGGER.info(dateFormat);
 				exception = true;
 			}
-		} while ((format == false && date != null) || exception == true);
+		} while ((!format && date != null) || exception);
 
-		Order order = orderService.update(new Order(order_id, cust_id, date, totalPrice));
+		Order order = orderService.update(new Order(orderId, custId, date, totalPrice));
 		LOGGER.info("Order Updated");
 		return order;
 	}

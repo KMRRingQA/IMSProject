@@ -39,11 +39,11 @@ public class OrderLineDaoMysql {
 
 			if (orderLine.getQuantity() == null) {
 				statement.executeUpdate("delete from orderLine where order_id = " + orderLine.getOrder_id()
-						+ " and item_id = " + orderLine.getItem_id());
+						+ " and item_id = " + orderLine.getItemIdd());
 			} else {
 				statement.executeUpdate(
 						"insert into orderLine(order_id, item_id, quantity) values('" + orderLine.getOrder_id() + "','"
-								+ orderLine.getItem_id() + "','" + orderLine.getQuantity() + "')");
+								+ orderLine.getItemIdd() + "','" + orderLine.getQuantity() + "')");
 				LOGGER.info(readLatest());
 			}
 			calculate(orderLine.getOrder_id());
@@ -55,10 +55,10 @@ public class OrderLineDaoMysql {
 	}
 
 	OrderLine orderListFromResultSet(ResultSet resultSet) throws SQLException {
-		Long order_id = resultSet.getLong("order_id");
-		Long item_id = resultSet.getLong("item_id");
+		Long orderId = resultSet.getLong("order_id");
+		Long itemId = resultSet.getLong("item_id");
 		Long quantity = resultSet.getLong("quantity");
-		return new OrderLine(order_id, item_id, quantity);
+		return new OrderLine(orderId, itemId, quantity);
 	}
 
 	public OrderLine readLatest() {
@@ -75,11 +75,10 @@ public class OrderLineDaoMysql {
 		return null;
 	}
 
-	public List<OrderLine> readOrder(Long order_id) {
+	public List<OrderLine> readOrder(Long orderId) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderLine where order_id = " + order_id);) {
-			System.out.println(order_id);
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderLine where order_id = " + orderId);) {
 			ArrayList<OrderLine> orderLines = new ArrayList<>();
 			while (resultSet.next()) {
 				orderLines.add(orderListFromResultSet(resultSet));
@@ -92,20 +91,20 @@ public class OrderLineDaoMysql {
 		return new ArrayList<>();
 	}
 
-	public BigDecimal calculate(Long order_id) {
+	public BigDecimal calculate(Long orderId) {
 		BigDecimal sum = BigDecimal.valueOf(0.00);
 
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(
 						"select quantity,items.price from orderLine join items on orderLine.item_id=items.id where order_id = "
-								+ order_id + ";");) {
+								+ orderId + ";");) {
 			while (resultSet.next()) {
 				BigDecimal tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
 				BigDecimal product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
 				sum = sum.add(product);
 			}
-			statement.executeUpdate("update orders set total_price = '" + sum + "' where order_id =" + order_id);
+			statement.executeUpdate("update orders set total_price = '" + sum + "' where order_id =" + orderId);
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

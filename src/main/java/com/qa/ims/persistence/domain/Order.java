@@ -4,23 +4,23 @@ import java.math.BigDecimal;
 
 public class Order {
 
-	private Long order_id;
+	private Long orderId;
 
-	private Long cust_id;
+	private Long custId;
 
 	private String date;
 
 	private BigDecimal totalPrice;
 
-	public Order(Long order_id, Long cust_id, String date, BigDecimal totalPrice) {
-		this.order_id = order_id;
-		this.cust_id = cust_id;
+	public Order(Long orderId, Long custId, String date, BigDecimal totalPrice) {
+		this.orderId = orderId;
+		this.custId = custId;
 		this.date = date;
 		this.totalPrice = totalPrice;
 	}
 
-	public Order(Long cust_id, String date, BigDecimal totalPrice) {
-		this.cust_id = cust_id;
+	public Order(Long custId, String date, BigDecimal totalPrice) {
+		this.custId = custId;
 		this.date = date;
 		this.totalPrice = totalPrice;
 	}
@@ -36,18 +36,18 @@ public class Order {
 
 		Order other = (Order) obj;
 
-		if (order_id == null) {
-			if (other.order_id != null) {
+		if (orderId == null) {
+			if (other.orderId != null) {
 				return false;
 			}
-		} else if (!order_id.equals(other.order_id)) {
+		} else if (!orderId.equals(other.orderId)) {
 			return false;
 		}
-		if (cust_id == null) {
-			if (other.cust_id != null) {
+		if (custId == null) {
+			if (other.custId != null) {
 				return false;
 			}
-		} else if (!cust_id.equals(other.cust_id)) {
+		} else if (!custId.equals(other.custId)) {
 			return false;
 		}
 		if (date == null) {
@@ -67,16 +67,16 @@ public class Order {
 		return true;
 	}
 
-	public Long getCust_id() {
-		return cust_id;
+	public Long getCustId() {
+		return custId;
 	}
 
 	public String getDate() {
 		return date;
 	}
 
-	public Long getOrder_id() {
-		return order_id;
+	public Long getOrderId() {
+		return orderId;
 	}
 
 	public BigDecimal getTotalPrice() {
@@ -87,23 +87,23 @@ public class Order {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((order_id == null) ? 0 : order_id.hashCode());
-		result = prime * result + ((cust_id == null) ? 0 : cust_id.hashCode());
+		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
+		result = prime * result + ((custId == null) ? 0 : custId.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((totalPrice == null) ? 0 : totalPrice.hashCode());
 		return result;
 	}
 
-	public void setCust_id(Long cust_id) {
-		this.cust_id = cust_id;
+	public void setCustId(Long custId) {
+		this.custId = custId;
 	}
 
 	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public void setOrder_id(Long order_id) {
-		this.order_id = order_id;
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 
 	public void setTotalPrice(BigDecimal totalPrice) {
@@ -112,7 +112,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "order id:" + order_id + " cust id:" + cust_id + " date:" + date + " total Price:" + totalPrice;
+		return "order id:" + orderId + " cust id:" + custId + " date:" + date + " total Price:" + totalPrice;
 	}
 
 }

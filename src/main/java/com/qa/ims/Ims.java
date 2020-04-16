@@ -78,7 +78,7 @@ public class Ims {
 			Domain domain = Domain.getDomain();
 			LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
 
-			if (domain.name().toLowerCase().equals("order")) {
+			if (domain.name().equalsIgnoreCase("order")) {
 				Action.printOrderActions();
 			} else {
 				Action.printActions();

@@ -12,7 +12,6 @@ public class OrderLineServices {
 	private OrderLineDaoMysql orderLineDao = new OrderLineDaoMysql(Ims.getUsername(), Ims.getPassword());
 
 	public OrderLineServices() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public OrderLineServices(OrderLineDaoMysql orderLineDaoMysql) {

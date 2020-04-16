@@ -37,29 +37,33 @@ public class Order {
 		Order other = (Order) obj;
 
 		if (order_id == null) {
-			if (other.order_id != null)
+			if (other.order_id != null) {
 				return false;
-		} else if (!order_id.equals(other.order_id))
+			}
+		} else if (!order_id.equals(other.order_id)) {
 			return false;
-
+		}
 		if (cust_id == null) {
-			if (other.cust_id != null)
+			if (other.cust_id != null) {
 				return false;
-		} else if (!cust_id.equals(other.cust_id))
+			}
+		} else if (!cust_id.equals(other.cust_id)) {
 			return false;
-
+		}
 		if (date == null) {
-			if (other.date != null)
+			if (other.date != null) {
 				return false;
-		} else if (!date.equals(other.date))
+			}
+		} else if (!date.equals(other.date)) {
 			return false;
-
+		}
 		if (totalPrice == null) {
-			if (other.totalPrice != null)
+			if (other.totalPrice != null) {
 				return false;
-		} else if (!totalPrice.equals(other.totalPrice))
+			}
+		} else if (!totalPrice.equals(other.totalPrice)) {
 			return false;
-
+		}
 		return true;
 	}
 

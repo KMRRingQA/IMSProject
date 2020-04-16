@@ -28,21 +28,21 @@ public class OrderLine {
 		if (order_id == null) {
 			if (other.order_id != null)
 				return false;
-		} else if (!order_id.equals(other.order_id))
+		} else if (!order_id.equals(other.order_id)) {
 			return false;
-
+		}
 		if (item_id == null) {
 			if (other.item_id != null)
 				return false;
-		} else if (!item_id.equals(other.item_id))
+		} else if (!item_id.equals(other.item_id)) {
 			return false;
-
+		}
 		if (quantity == null) {
 			if (other.quantity != null)
 				return false;
-		} else if (!quantity.equals(other.quantity))
+		} else if (!quantity.equals(other.quantity)) {
 			return false;
-
+		}
 		return true;
 	}
 

@@ -36,9 +36,9 @@ public class Item {
 			if (other.name != null) {
 				return false;
 			}
-		} else if (!name.equals(other.name))
+		} else if (!name.equals(other.name)) {
 			return false;
-
+		}
 		if (id == null) {
 			if (other.id != null) {
 				return false;
@@ -50,16 +50,16 @@ public class Item {
 			if (other.price != null) {
 				return false;
 			}
-		} else if (!price.equals(other.price))
+		} else if (!price.equals(other.price)) {
 			return false;
-
+		}
 		if (stock == null) {
 			if (other.stock != null) {
 				return false;
 			}
-		} else if (!stock.equals(other.stock))
+		} else if (!stock.equals(other.stock)) {
 			return false;
-
+		}
 		return true;
 	}
 

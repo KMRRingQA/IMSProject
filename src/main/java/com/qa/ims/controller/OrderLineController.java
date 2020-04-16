@@ -74,9 +74,14 @@ public class OrderLineController {
 				}
 			} while (quantity == null || quantity < 1l);
 		}
-		return orderLineService.changeItems(new OrderLine(orderId, itemId, quantity));
+		orderLineService.changeItems(new OrderLine(orderId, itemId, quantity));
+		LOGGER.info("Item added to order");
+		return new OrderLine(orderId, itemId, quantity);
 	}
 
+//	Order order = orderService.update(new Order(orderId, custId, date, totalPrice));
+//	LOGGER.info("Order Updated");
+//	return order;
 	public List<OrderLine> readItemsInOrder() {
 		Long orderId = null;
 		do {
@@ -92,7 +97,6 @@ public class OrderLineController {
 			LOGGER.info(orderLine.toString());
 		}
 		return orderLines;
-
 	}
 
 	public BigDecimal calculateOrderPrice() {

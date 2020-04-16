@@ -80,29 +80,29 @@ public class OrderLineControllerTest {
 		assertEquals(savedOrderLine, orderLineController.changeItems());
 	}
 
-	@Test
-	public void readItemsInOrderTest() {
-		String firstName = "Chris";
-		String surname = "Perrins";
-		Mockito.doReturn(firstName, surname).when(orderLineController).getInput();
-		OrderLine orderLine = new OrderLine(firstName, surname);
-		OrderLine savedOrderLine = new OrderLine(1L, "Chris", "Perrins");
-		Mockito.when(orderLineServices.create(orderLine)).thenReturn(savedOrderLine);
-		assertEquals(savedOrderLine, orderLineController.create());
-	}
-
-	/**
-	 * 
-	 */
-	@Test
-	public void calculateOrderPriceTest() {
-		String id = "1";
-		String firstName = "Rhys";
-		String surname = "Thompson";
-		Mockito.doReturn(id, firstName, surname).when(orderLineController).getInput();
-		OrderLine orderLine = new OrderLine(1L, firstName, surname);
-		Mockito.when(orderLineServices.update(orderLine)).thenReturn(orderLine);
-		assertEquals(orderLine, orderLineController.update());
-	}
+//	@Test
+//	public void readItemsInOrderTest() {
+//		String firstName = "Chris";
+//		String surname = "Perrins";
+//		Mockito.doReturn(firstName, surname).when(orderLineController).getInput();
+//		OrderLine orderLine = new OrderLine(firstName, surname);
+//		OrderLine savedOrderLine = new OrderLine(1L, "Chris", "Perrins");
+//		Mockito.when(orderLineServices.create(orderLine)).thenReturn(savedOrderLine);
+//		assertEquals(savedOrderLine, orderLineController.create());
+//	}
+//
+//	/**
+//	 * 
+//	 */
+//	@Test
+//	public void calculateOrderPriceTest() {
+//		String id = "1";
+//		String firstName = "Rhys";
+//		String surname = "Thompson";
+//		Mockito.doReturn(id, firstName, surname).when(orderLineController).getInput();
+//		OrderLine orderLine = new OrderLine(1L, firstName, surname);
+//		Mockito.when(orderLineServices.update(orderLine)).thenReturn(orderLine);
+//		assertEquals(orderLine, orderLineController.update());
+//	}
 
 }

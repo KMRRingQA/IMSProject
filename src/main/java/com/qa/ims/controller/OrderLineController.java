@@ -74,9 +74,9 @@ public class OrderLineController {
 				}
 			} while (quantity == null || quantity < 1l);
 		}
-		orderLineService.changeItems(new OrderLine(orderId, itemId, quantity));
+
 		LOGGER.info("Item added to order");
-		return new OrderLine(orderId, itemId, quantity);
+		return orderLineService.changeItems(new OrderLine(orderId, itemId, quantity));
 	}
 
 //	Order order = orderService.update(new Order(orderId, custId, date, totalPrice));

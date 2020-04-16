@@ -52,8 +52,16 @@ public class Ims {
 		}
 	}
 
-	public static String username = null;
-	public static String password = null;
+	public static String getUsername() {
+		return username;
+	}
+
+	public static String getPassword() {
+		return password;
+	}
+
+	private static String username;
+	private static String password;
 
 	public void imsSystem() {
 		LOGGER.info("Enter username");
@@ -104,7 +112,7 @@ public class Ims {
 				break;
 			}
 			if (!action.name().equalsIgnoreCase("return")) {
-				LOGGER.info("Task completed succesfully.\n");
+				LOGGER.info("Task finished.\n");
 			}
 		}
 	}

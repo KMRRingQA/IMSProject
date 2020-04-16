@@ -71,12 +71,15 @@ public class Ims {
 
 		init(username, password);
 
-		boolean stop = false;
-		while (!stop) {
+		while (true) {
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
 
 			Domain domain = Domain.getDomain();
+			if (domain.name().equalsIgnoreCase("stop")) {
+				LOGGER.info("Program exiting...");
+				break;
+			}
 			LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
 
 			if (domain.name().equalsIgnoreCase("order")) {
@@ -108,7 +111,6 @@ public class Ims {
 				}
 				break;
 			case STOP:
-				stop = true;
 				break;
 			default:
 				break;

@@ -52,7 +52,8 @@ public class OrderController implements CrudController<Order> {
 			try {
 				date = getInput();
 				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
-						|| Integer.valueOf(date.split("-")[1]) > 12 || Integer.valueOf(date.split("-")[2]) > 31)) {
+						|| Integer.valueOf(date.split("-")[0]) < 2010 || Integer.valueOf(date.split("-")[1]) > 12
+						|| Integer.valueOf(date.split("-")[2]) > 31)) {
 					format = false;
 					LOGGER.info(dateFormat);
 				}
@@ -139,7 +140,8 @@ public class OrderController implements CrudController<Order> {
 			try {
 				date = getInput();
 				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
-						|| Integer.valueOf(date.split("-")[1]) > 12 || Integer.valueOf(date.split("-")[2]) > 31)) {
+						|| Integer.valueOf(date.split("-")[0]) < 2010 || Integer.valueOf(date.split("-")[1]) > 12
+						|| Integer.valueOf(date.split("-")[2]) > 31)) {
 					format = false;
 					LOGGER.info(dateFormat);
 				}

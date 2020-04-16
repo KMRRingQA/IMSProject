@@ -16,10 +16,6 @@ public enum Domain {
 		while (true) {
 			try {
 				domain = Domain.valueOf(Utils.getInput().toUpperCase());
-				if (domain == STOP) {
-					LOGGER.info("Program exiting...");
-					System.exit(0);
-				}
 				break;
 
 			} catch (IllegalArgumentException e) {

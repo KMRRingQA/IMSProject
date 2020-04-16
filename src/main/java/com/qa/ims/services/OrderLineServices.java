@@ -19,16 +19,16 @@ public class OrderLineServices {
 		this.orderLineDao = orderLineDaoMysql;
 	}
 
-	public BigDecimal calculate(Long order_id) {
-		return orderLineDao.calculate(order_id);
+	public BigDecimal calculate(Long orderId) {
+		return orderLineDao.calculate(orderId);
 	}
 
 	public OrderLine changeItems(OrderLine orderLine) {
 		return orderLineDao.changeItems(orderLine);
 	}
 
-	public List<OrderLine> readOrder(Long order_id) {
-		return orderLineDao.readOrder(order_id);
+	public List<OrderLine> readOrder(Long orderId) {
+		return orderLineDao.readOrder(orderId);
 	}
 
 }

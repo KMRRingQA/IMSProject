@@ -38,15 +38,15 @@ public class OrderLineDaoMysql {
 				Statement statement = connection.createStatement();) {
 
 			if (orderLine.getQuantity() == null) {
-				statement.executeUpdate("delete from orderLine where order_id = " + orderLine.getOrder_id()
-						+ " and item_id = " + orderLine.getItemIdd());
+				statement.executeUpdate("delete from orderLine where order_id = " + orderLine.getOrderId()
+						+ " and item_id = " + orderLine.getItemId());
 			} else {
 				statement.executeUpdate(
-						"insert into orderLine(order_id, item_id, quantity) values('" + orderLine.getOrder_id() + "','"
-								+ orderLine.getItemIdd() + "','" + orderLine.getQuantity() + "')");
+						"insert into orderLine(order_id, item_id, quantity) values('" + orderLine.getOrderId() + "','"
+								+ orderLine.getItemId() + "','" + orderLine.getQuantity() + "')");
 				LOGGER.info(readLatest());
 			}
-			calculate(orderLine.getOrder_id());
+			calculate(orderLine.getOrderId());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

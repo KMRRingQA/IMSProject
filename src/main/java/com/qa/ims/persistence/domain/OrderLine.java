@@ -49,11 +49,11 @@ public class OrderLine {
 		return true;
 	}
 
-	public Long getItemIdd() {
+	public Long getItemId() {
 		return itemId;
 	}
 
-	public Long getOrder_id() {
+	public Long getOrderId() {
 		return orderId;
 	}
 
@@ -71,12 +71,12 @@ public class OrderLine {
 		return result;
 	}
 
-	public void setItem_id(Long item_id) {
-		this.itemId = item_id;
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
 	}
 
-	public void setOrder_id(Long order_id) {
-		this.orderId = order_id;
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 
 	public void setQuantity(Long quantity) {
@@ -85,7 +85,7 @@ public class OrderLine {
 
 	@Override
 	public String toString() {
-		return "order_id:" + orderId + " item_id:" + itemId + " quantity:" + quantity;
+		return "order id:" + orderId + " item id:" + itemId + " quantity:" + quantity;
 	}
 
 }

@@ -117,7 +117,7 @@ public class OrderController implements CrudController<Order> {
 				LOGGER.info("Please enter the Order ID associated with the Order.");
 				orderId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter a decimal number (only).");
+				LOGGER.info("Please enter an integer (only).");
 			}
 		} while (orderId == null || orderId < 0);
 
@@ -126,7 +126,7 @@ public class OrderController implements CrudController<Order> {
 				LOGGER.info("Please enter the (new) Customer ID associated with the Order.");
 				custId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter a decimal number (only).");
+				LOGGER.info("Please enter an integer (only).");
 			}
 		} while (custId == null || custId < 0);
 
@@ -150,6 +150,15 @@ public class OrderController implements CrudController<Order> {
 				exception = true;
 			}
 		} while ((!format && date != null) || exception);
+
+		do {
+			try {
+				LOGGER.info("Please enter the total cost of the order (€)");
+				totalPrice = BigDecimal.valueOf(Double.parseDouble(getInput()));
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Please enter a decimal number (only).");
+			}
+		} while (totalPrice == null || totalPrice.intValue() < 0);
 
 		Order order = orderService.update(new Order(orderId, custId, date, totalPrice));
 		LOGGER.info("Order Updated");

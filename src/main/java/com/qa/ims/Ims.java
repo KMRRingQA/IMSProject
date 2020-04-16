@@ -70,6 +70,7 @@ public class Ims {
 		password = Utils.getInput();
 
 		init(username, password);
+
 		boolean stop = false;
 		while (!stop) {
 			LOGGER.info("Which entity would you like to use?");

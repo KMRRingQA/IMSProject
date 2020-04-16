@@ -33,26 +33,30 @@ public class Item {
 		Item other = (Item) obj;
 
 		if (name == null) {
-			if (other.name != null)
+			if (other.name != null) {
 				return false;
+			}
 		} else if (!name.equals(other.name))
 			return false;
 
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
-
+		}
 		if (price == null) {
-			if (other.price != null)
+			if (other.price != null) {
 				return false;
+			}
 		} else if (!price.equals(other.price))
 			return false;
 
 		if (stock == null) {
-			if (other.stock != null)
+			if (other.stock != null) {
 				return false;
+			}
 		} else if (!stock.equals(other.stock))
 			return false;
 

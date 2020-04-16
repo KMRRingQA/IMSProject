@@ -71,7 +71,7 @@ public class Ims {
 
 		init(username, password);
 		boolean stop = false;
-		while (stop == false) {
+		while (!stop) {
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
 

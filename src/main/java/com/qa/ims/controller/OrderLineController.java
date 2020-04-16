@@ -42,7 +42,7 @@ public class OrderLineController {
 
 		do {
 			try {
-				LOGGER.info("Please enter the id of the order you would like add/remove");
+				LOGGER.info("Please enter the id of the order you would like add/remove an item to/from");
 				order_id = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
@@ -63,7 +63,7 @@ public class OrderLineController {
 			do {
 				try {
 					LOGGER.info(
-							"Please enter the quantity of given items you would like to add to the order. Leave blank to default to 1.");
+							"Please enter the quantity of given items you would like to add to the order. Leaving this blank will default to 1.");
 					String tempString = getInput();
 					if (!tempString.isEmpty()) {
 						quantity = Long.valueOf(tempString);

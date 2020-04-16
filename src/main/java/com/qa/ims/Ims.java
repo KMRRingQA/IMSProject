@@ -15,12 +15,15 @@ import com.qa.ims.controller.CrudController;
 import com.qa.ims.controller.CustomerController;
 import com.qa.ims.controller.ItemController;
 import com.qa.ims.controller.OrderController;
+import com.qa.ims.controller.OrderLineController;
 import com.qa.ims.persistence.dao.CustomerDaoMysql;
 import com.qa.ims.persistence.dao.ItemDaoMysql;
 import com.qa.ims.persistence.dao.OrderDaoMysql;
+import com.qa.ims.persistence.dao.OrderLineDaoMysql;
 import com.qa.ims.persistence.domain.Domain;
 import com.qa.ims.services.CustomerServices;
 import com.qa.ims.services.ItemServices;
+import com.qa.ims.services.OrderLineServices;
 import com.qa.ims.services.OrderServices;
 import com.qa.ims.utils.Utils;
 
@@ -49,11 +52,14 @@ public class Ims {
 		}
 	}
 
+	public static String username = null;
+	public static String password = null;
+
 	public void imsSystem() {
 		LOGGER.info("Enter username");
-		String username = Utils.getInput();
+		username = Utils.getInput();
 		LOGGER.info("Enter password");
-		String password = Utils.getInput();
+		password = Utils.getInput();
 
 		init(username, password);
 
@@ -88,12 +94,8 @@ public class Ims {
 					OrderController orderController = new OrderController(
 							new OrderServices(new OrderDaoMysql(username, password)));
 					doAction(orderController, action);
-				} else if (name.equals("additem") || name.equals("removeitem") || name.equals("calculateorderprice")
-						|| name.equals("readitems")) {
-					System.out.println("this is a special action" + action.name());
-					OrderListController orderListController = new OrderListController(
-							new OrderListServices(new OrderListDaoMysql(username, password)));
-					doAction(orderListController, action);
+				} else if (name.equals("orderitems") || name.equals("readorder") || name.equals("calculate")) {
+					doOrderLineAction(action, username, password);
 				}
 				break;
 			case STOP:
@@ -104,6 +106,26 @@ public class Ims {
 			if (!action.name().equalsIgnoreCase("return")) {
 				LOGGER.info("Task completed succesfully.\n");
 			}
+		}
+	}
+
+	public void doOrderLineAction(Action action, String username, String password) {
+		OrderLineController orderLineController = new OrderLineController(
+				new OrderLineServices(new OrderLineDaoMysql(username, password)));
+		switch (action) {
+		case ORDERITEMS:
+			orderLineController.changeItems();
+			break;
+		case READORDER:
+			orderLineController.readItemsInOrder();
+			break;
+		case CALCULATE:
+			orderLineController.calculateOrderPrice();
+			break;
+		case RETURN:
+			break;
+		default:
+			break;
 		}
 	}
 

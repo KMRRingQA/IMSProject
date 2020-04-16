@@ -12,9 +12,9 @@ import com.qa.ims.utils.Utils;
 public enum Action {
 	RETURN("To return to domain selection"), CREATE("To save a new item into the database"),
 	READ("To read an item from the database"), UPDATE("To change an item already in the database"),
-	DELETE("To remove an item from the database"), ADDITEM("To add an item to an existing order"),
-	DELETEITEM("To delete an item from an existing order"), READITEMS("To show all items in an existing order"),
-	CALCULATEORDERPRICE("Calculates the current price on an existing order");
+	DELETE("To remove an item from the database"), ORDERITEMS("To add an item to an existing order"),
+	READORDER("To show all items in an existing order"),
+	CALCULATE("Calculates the current price on an existing order");
 
 	public static final Logger LOGGER = Logger.getLogger(Action.class);
 

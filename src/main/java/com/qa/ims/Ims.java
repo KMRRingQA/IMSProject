@@ -110,8 +110,6 @@ public class Ims {
 					doOrderLineAction(action, username, password);
 				}
 				break;
-			case STOP:
-				break;
 			default:
 				break;
 			}

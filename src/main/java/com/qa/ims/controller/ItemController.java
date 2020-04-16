@@ -129,8 +129,8 @@ public class ItemController implements CrudController<Item> {
 			}
 		} while (stock == null || stock < 0);
 
-		Item item = itemService.create(new Item(id, name, price, stock));
-		LOGGER.info("Customer Updated");
+		Item item = itemService.update(new Item(id, name, price, stock));
+		LOGGER.info("Item Updated");
 		return item;
 	}
 

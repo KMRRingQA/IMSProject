@@ -70,8 +70,8 @@ public class Ims {
 		password = Utils.getInput();
 
 		init(username, password);
-
-		while (true) {
+		boolean stop = false;
+		while (stop == false) {
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
 
@@ -107,6 +107,7 @@ public class Ims {
 				}
 				break;
 			case STOP:
+				stop = true;
 				break;
 			default:
 				break;

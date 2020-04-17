@@ -7,15 +7,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.qa.ims.Ims;
-import com.qa.ims.persistence.dao.OrderLineDaoMysql;
+import com.qa.ims.persistence.dao.DaoOrderLine;
 import com.qa.ims.persistence.domain.OrderLine;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrderLineServicesTest {
 
 	@Mock
-	private OrderLineDaoMysql orderLineDao = new OrderLineDaoMysql(Ims.getUsername(), Ims.getPassword());
+	private DaoOrderLine<OrderLine> orderLineDao;
 
 	@InjectMocks
 	private OrderLineServices orderLineServices;

@@ -69,45 +69,4 @@ public class OrderLineDaoMysqlTest {
 		OrderLine orderLine = new OrderLine(1L, 1L, 10L);
 		assertEquals(orderLine, orderLineDaoMysql.readLatest());
 	}
-
-//	@Test
-//	public void eReadOrderLineTest() {
-//
-//	public void eCalculate() {
-//		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
-//		OrderLine orderLine = new OrderLine(1L, 1L, "2020-04-16 00:00:00",
-//				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP));
-//		assertEquals(orderLine, orderLineDaoMysql.readOrderLine(1L));
-//	}
-//
-//	/**
-//	 * 
-//	 */
-//	@Test
-//	public void fUpdateTest() {
-//		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
-//		String orderLineId = "1";
-//		String custId = "1";
-//		String date = "2020-04-17";
-//		String totalPrice = "1.01";
-//		OrderLine orderLine = new OrderLine(Long.parseLong(orderLineId), Long.parseLong(custId), date + " 00:00:00",
-//				BigDecimal.valueOf(Double.parseDouble(totalPrice)).setScale(2, BigDecimal.ROUND_HALF_UP));
-//		assertEquals(orderLine, orderLineDaoMysql.update(orderLine));
-//	}
-//
-////
-//	/**
-//	 * Delete doesn't return anything, but we can readall afterwards to make sure
-//	 * that it has been deleted.
-//	 */
-//	@Test
-//	public void gDeleteTest() {
-//		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
-//		String id = "1";
-//		orderLineDaoMysql.delete(Long.parseLong(id));
-//		List<OrderLine> orderLines = new ArrayList<>();
-//		orderLines.add(new OrderLine(2L, 1L, "2020-04-18 00:00:00",
-//				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP)));
-//		assertEquals(orderLines, orderLineDaoMysql.readAll());
-//	}
 }

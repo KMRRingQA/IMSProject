@@ -15,6 +15,9 @@ import com.qa.ims.utils.Utils;
  */
 public class OrderController implements CrudController<Order> {
 
+	private String notAnInteger = "Please enter an integer (only).";
+	private String enterDate = "Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.\n";
+
 	public static final Logger LOGGER = Logger.getLogger(OrderController.class);
 
 	private CrudServices<Order> orderService;
@@ -37,15 +40,13 @@ public class OrderController implements CrudController<Order> {
 				LOGGER.info("Please enter the customer ID associated with the Order.");
 				custId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info(notAnInteger);
 			}
 		} while (custId == null || custId < 0);
 
 		boolean format;
 		boolean exception;
-		String dateFormat = "Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.";
-		LOGGER.info(
-				"Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
+		LOGGER.info(enterDate);
 		do {
 			exception = false;
 			format = true;
@@ -55,10 +56,10 @@ public class OrderController implements CrudController<Order> {
 						|| Integer.valueOf(date.split("-")[0]) < 2010 || Integer.valueOf(date.split("-")[1]) > 12
 						|| Integer.valueOf(date.split("-")[2]) > 31)) {
 					format = false;
-					LOGGER.info(dateFormat);
+					LOGGER.info(enterDate);
 				}
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException aioobeNfe) {
-				LOGGER.info(dateFormat);
+				LOGGER.info(enterDate);
 				exception = true;
 			}
 		} while ((!format && date != null) || exception);
@@ -79,7 +80,7 @@ public class OrderController implements CrudController<Order> {
 				LOGGER.info("Please enter the id of the order you would like to delete");
 				id = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info(notAnInteger);
 			}
 		} while (id == null);
 		orderService.delete(id);
@@ -110,14 +111,13 @@ public class OrderController implements CrudController<Order> {
 		Long custId = null;
 		String date = null;
 		BigDecimal totalPrice = BigDecimal.valueOf(0);
-		String dateFormat = "Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.";
 
 		do {
 			try {
 				LOGGER.info("Please enter the Order ID associated with the Order.");
 				orderId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info(notAnInteger);
 			}
 		} while (orderId == null || orderId < 0);
 
@@ -126,14 +126,13 @@ public class OrderController implements CrudController<Order> {
 				LOGGER.info("Please enter the (new) Customer ID associated with the Order.");
 				custId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info("notAnInteger");
 			}
 		} while (custId == null || custId < 0);
 
 		boolean format;
 		boolean exception;
-		LOGGER.info(
-				"Please enter a Date in the format YYYY-MM-DD. You may leave this blank to default to the current date.");
+		LOGGER.info(enterDate);
 		do {
 			exception = false;
 			format = true;
@@ -143,10 +142,10 @@ public class OrderController implements CrudController<Order> {
 						|| Integer.valueOf(date.split("-")[0]) < 2010 || Integer.valueOf(date.split("-")[1]) > 12
 						|| Integer.valueOf(date.split("-")[2]) > 31)) {
 					format = false;
-					LOGGER.info(dateFormat);
+					LOGGER.info(enterDate);
 				}
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException aioobeNfe) {
-				LOGGER.info(dateFormat);
+				LOGGER.info(enterDate);
 				exception = true;
 			}
 		} while ((!format && date != null) || exception);

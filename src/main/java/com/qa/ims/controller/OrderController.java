@@ -26,9 +26,6 @@ public class OrderController implements CrudController<Order> {
 		this.orderService = orderService;
 	}
 
-	/**
-	 * Creates a customer by taking in user input
-	 */
 	@Override
 	public Order create() {
 		Long custId = null;
@@ -69,9 +66,6 @@ public class OrderController implements CrudController<Order> {
 		return order;
 	}
 
-	/**
-	 * Deletes an existing customer by the id of the customer
-	 */
 	@Override
 	public void delete() {
 		Long id = null;
@@ -90,9 +84,6 @@ public class OrderController implements CrudController<Order> {
 		return Utils.getInput();
 	}
 
-	/**
-	 * Reads all customers to the logger
-	 */
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderService.readAll();
@@ -102,9 +93,6 @@ public class OrderController implements CrudController<Order> {
 		return orders;
 	}
 
-	/**
-	 * Updates an existing customer by taking in user input
-	 */
 	@Override
 	public Order update() {
 		Long orderId = null;

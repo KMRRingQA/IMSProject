@@ -60,6 +60,14 @@ public class Ims {
 		return password;
 	}
 
+	public static void setUsername(String username) {
+		Ims.username = username;
+	}
+
+	public static void setPassword(String password) {
+		Ims.password = password;
+	}
+
 	private static String username;
 	private static String password;
 

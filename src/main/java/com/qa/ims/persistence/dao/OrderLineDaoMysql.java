@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.qa.ims.persistence.domain.OrderLine;
 
-public class OrderLineDaoMysql {
+public class OrderLineDaoMysql implements DaoOrderLine<OrderLine> {
 
 	public static final Logger LOGGER = Logger.getLogger(OrderLineDaoMysql.class);
 

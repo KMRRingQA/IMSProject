@@ -30,7 +30,7 @@ public class DomainTest {
 		assertTrue(domain.getDescription().toLowerCase().contains("close"));
 	}
 
-// TODO
+//// TODO
 //	@Test
 //	public void getDomainTest() {
 //		String domainName = "stop";

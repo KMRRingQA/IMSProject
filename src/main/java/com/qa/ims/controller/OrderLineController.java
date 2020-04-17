@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.qa.ims.persistence.domain.OrderLine;
-import com.qa.ims.services.OrderLineServices;
+import com.qa.ims.services.OLServices;
 import com.qa.ims.utils.Utils;
 
 /**
@@ -17,10 +17,10 @@ public class OrderLineController {
 
 	public static final Logger LOGGER = Logger.getLogger(OrderLineController.class);
 
-	private OrderLineServices orderLineService;
+	private OLServices<OrderLine> orderLineService;
 
-	public OrderLineController(OrderLineServices orderLineServices) {
-		this.orderLineService = new OrderLineServices();
+	public OrderLineController(OLServices<OrderLine> orderLineService) {
+		this.orderLineService = orderLineService;
 	}
 
 	String getInput() {
@@ -32,51 +32,60 @@ public class OrderLineController {
 		Long itemId = null;
 		Long quantity = null;
 		String action = null;
+		String stop = "n";
 
 		LOGGER.info("Would you like to add or remove an item from your order?");
-		LOGGER.info("ADD: To add an item to an order");
-		LOGGER.info("REMOVE: To remove an item from an order");
 		do {
-			action = getInput().toLowerCase();
-		} while (!action.equals("remove") && !action.equals("add"));
+			orderId = null;
+			itemId = null;
+			quantity = null;
+			action = null;
+			LOGGER.info("ADD: To add an item to an order");
+			LOGGER.info("REMOVE: To remove an item from an order");
+			do {
+				action = getInput().toLowerCase();
+			} while (!action.equals("remove") && !action.equals("add"));
 
-		do {
-			try {
-				LOGGER.info("Please enter the id of the order you would like add/remove an item to/from");
-				orderId = Long.valueOf(getInput());
-			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
-			}
-		} while (orderId == null || orderId < 0);
-
-		do {
-			try {
-				LOGGER.info("Please enter the id of the item you would like to add/remove");
-				itemId = Long.valueOf(getInput());
-			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
-			}
-		} while (itemId == null || itemId < 0);
-
-		if (action.equals("add")) {
-			quantity = 1l;
 			do {
 				try {
-					LOGGER.info(
-							"Please enter the quantity of given items you would like to add to the order. Leaving this blank will default to 1.");
-					String tempString = getInput();
-					if (!tempString.isEmpty()) {
-						quantity = Long.valueOf(tempString);
-					}
-				} catch (NumberFormatException | NullPointerException nfeNpe) {
+					LOGGER.info("Please enter the id of the order you would like add/remove an item to/from");
+					orderId = Long.valueOf(getInput());
+				} catch (NumberFormatException nfe) {
 					LOGGER.info("Please enter an integer (only).");
-					quantity = 1l;
 				}
-			} while (quantity == null || quantity < 1l);
-		}
+			} while (orderId == null || orderId < 0);
 
-		LOGGER.info("Item added to order");
-		return orderLineService.changeItems(new OrderLine(orderId, itemId, quantity));
+			do {
+				try {
+					LOGGER.info("Please enter the id of the item you would like to add/remove");
+					itemId = Long.valueOf(getInput());
+				} catch (NumberFormatException nfe) {
+					LOGGER.info("Please enter an integer (only).");
+				}
+			} while (itemId == null || itemId < 0);
+
+			if (action.equals("add")) {
+				quantity = 1l;
+				do {
+					try {
+						LOGGER.info(
+								"Please enter the quantity of given items you would like to add to the order. Leaving this blank will default to 1.");
+						String tempString = getInput();
+						if (!tempString.isEmpty()) {
+							quantity = Long.valueOf(tempString);
+						}
+					} catch (NumberFormatException | NullPointerException nfeNpe) {
+						LOGGER.info("Please enter an integer (only).");
+						quantity = 1l;
+					}
+				} while (quantity == null || quantity < 1l);
+			}
+			orderLineService.changeItems(new OrderLine(orderId, itemId, quantity));
+			LOGGER.info("Item added to order");
+			LOGGER.info("Would you like to add another item? Y/N");
+			stop = getInput().toLowerCase();
+		} while (stop.equals("y"));
+		return new OrderLine(orderId, itemId, quantity);
 	}
 
 	public List<OrderLine> readItemsInOrder() {

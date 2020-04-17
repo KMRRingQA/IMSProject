@@ -51,7 +51,7 @@ public class OrderControllerTest {
 		String custId = "1";
 		String date = "2020-4-1";
 
-		Mockito.doReturn(custId, "no", date).when(orderController).getInput();
+		Mockito.doReturn(custId, "no", "2020-4-40", "30.2-20.3-29.3", date).when(orderController).getInput();
 		Long custIdConverted = Long.valueOf(custId);
 		Order order = new Order(custIdConverted, date, BigDecimal.valueOf(0));
 		Order savedOrder = new Order(1L, "2020-4-1", BigDecimal.valueOf(0));

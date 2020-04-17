@@ -51,7 +51,7 @@ public class OrderLineDaoMysql implements DaoOrderLine<OrderLine> {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
-		return null;
+		return orderLine;
 	}
 
 	OrderLine orderListFromResultSet(ResultSet resultSet) throws SQLException {

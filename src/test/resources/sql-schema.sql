@@ -7,3 +7,4 @@ CREATE TABLE if not exists ims.orderLine(orderline_id int primary key auto_incre
 insert into ims.customers(first_name, surname) values('Luke', 'Conway');
 insert into ims.items(name,price,stock) values('Skyrim', '2.49', '100');
 insert into ims.orders(cust_id,date,total_price) values('1', '2020-4-16', '0.00');
+insert into ims.orderLine(order_id,item_id,quantity) values('1', '1', '20');

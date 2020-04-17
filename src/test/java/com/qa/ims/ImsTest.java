@@ -1,5 +1,6 @@
 package com.qa.ims;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,8 +15,8 @@ public class ImsTest {
 	@InjectMocks
 	private Ims ims;
 
-	@Test
-	public void aInit() {
+	@BeforeClass
+	public static void aInit() {
 		Ims ims = new Ims();
 		ims.init("jdbc:mysql://34.67.113.137:3306/", "root", "root", "src/test/resources/sql-schema.sql");
 	}

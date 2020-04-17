@@ -165,21 +165,4 @@ public class Ims {
 		}
 	}
 
-	public String readFile(String fileLocation) {
-		StringBuilder stringBuilder = new StringBuilder();
-		try (BufferedReader br = new BufferedReader(new FileReader(fileLocation));) {
-			String string;
-			while ((string = br.readLine()) != null) {
-				stringBuilder.append(string);
-				stringBuilder.append("\r\n");
-			}
-		} catch (IOException e) {
-			for (StackTraceElement ele : e.getStackTrace()) {
-				LOGGER.debug(ele);
-			}
-			LOGGER.error(e.getMessage());
-		}
-		return stringBuilder.toString();
-	}
-
 }

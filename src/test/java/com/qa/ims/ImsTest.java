@@ -22,7 +22,8 @@ public class ImsTest {
 
 	@Test
 	public void bImsSystem() {
-		Mockito.doReturn("root", "root", "stop").when(ims).getInput();
+		Mockito.doReturn("root", "root", "customer", "calculate", "item", "return", "order", "return", "stop").when(ims)
+				.getInput();
 		ims.imsSystem();
 	}
 

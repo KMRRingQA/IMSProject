@@ -83,7 +83,8 @@ public class Ims {
 			} else {
 				Action.printActions();
 			}
-			Action action = Action.getAction();
+			String actionselect = getInput();
+			Action action = Action.setAction(actionselect);
 
 			switch (domain) {
 			case CUSTOMER:
@@ -127,8 +128,6 @@ public class Ims {
 			break;
 		case CALCULATE:
 			orderLineController.calculateOrderPrice();
-			break;
-		case RETURN:
 			break;
 		default:
 			break;

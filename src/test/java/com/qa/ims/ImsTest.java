@@ -1,4 +1,4 @@
-package com.qa.ims.controller;
+package com.qa.ims;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,17 +14,18 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.qa.ims.controller.OrderController;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.services.OrderServices;
 
 @RunWith(MockitoJUnitRunner.class)
-public class OrderControllerTest {
+public class ImsTest {
 
 	/**
 	 * The thing I want to fake functionality for
 	 */
 	@Mock
-	private OrderServices orderServices;
+	private Ims;
 
 	/**
 	 * Spy is used because i want to mock some methods inside the order I'm testing

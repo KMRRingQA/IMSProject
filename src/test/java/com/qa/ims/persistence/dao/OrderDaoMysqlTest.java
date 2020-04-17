@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,8 +40,8 @@ public class OrderDaoMysqlTest {
 	@InjectMocks
 	private OrderController orderController;
 
-	@Test
-	public void aInit() {
+	@BeforeClass
+	public static void aInit() {
 		Ims ims = new Ims();
 		ims.init("jdbc:mysql://34.67.113.137:3306/", "root", "root", "src/test/resources/sql-schema.sql");
 	}
@@ -111,6 +112,16 @@ public class OrderDaoMysqlTest {
 		orders.add(new Order(2L, 1L, "2020-04-18 00:00:00",
 				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP)));
 		assertEquals(orders, orderDaoMysql.readAll());
+	}
+
+	@Test
+	public void hCreateWithoutDateTest() {
+		OrderDaoMysql orderDaoMysql = new OrderDaoMysql("root", "root");
+		Long custId = 1L;
+		String date = "";
+		BigDecimal totalPrice = BigDecimal.valueOf(0.0);
+		Order order = new Order(custId, date, totalPrice);
+		assertEquals(order, orderDaoMysql.create(order));
 	}
 
 }

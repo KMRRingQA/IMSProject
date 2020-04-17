@@ -27,19 +27,20 @@ public class OrderLineController {
 		return Utils.getInput();
 	}
 
+	private String integerInput = "Please enter an integer (only).";
+
 	public OrderLine changeItems() {
 		Long orderId = null;
 		Long itemId = null;
 		Long quantity = null;
-		String action = null;
-		String stop = "n";
+		String action;
+		String stop;
 
 		LOGGER.info("Would you like to add or remove an item from your order?");
 		do {
 			orderId = null;
 			itemId = null;
 			quantity = null;
-			action = null;
 			LOGGER.info("ADD: To add an item to an order");
 			LOGGER.info("REMOVE: To remove an item from an order");
 			do {
@@ -51,7 +52,7 @@ public class OrderLineController {
 					LOGGER.info("Please enter the id of the order you would like add/remove an item to/from");
 					orderId = Long.valueOf(getInput());
 				} catch (NumberFormatException nfe) {
-					LOGGER.info("Please enter an integer (only).");
+					LOGGER.info(integerInput);
 				}
 			} while (orderId == null || orderId < 0);
 
@@ -60,7 +61,7 @@ public class OrderLineController {
 					LOGGER.info("Please enter the id of the item you would like to add/remove");
 					itemId = Long.valueOf(getInput());
 				} catch (NumberFormatException nfe) {
-					LOGGER.info("Please enter an integer (only).");
+					LOGGER.info(integerInput);
 				}
 			} while (itemId == null || itemId < 0);
 
@@ -75,7 +76,7 @@ public class OrderLineController {
 							quantity = Long.valueOf(tempString);
 						}
 					} catch (NumberFormatException | NullPointerException nfeNpe) {
-						LOGGER.info("Please enter an integer (only).");
+						LOGGER.info(integerInput);
 						quantity = 1l;
 					}
 				} while (quantity == null || quantity < 1l);
@@ -93,9 +94,10 @@ public class OrderLineController {
 		do {
 			try {
 				LOGGER.info("Please enter the id of the order you would like read");
-				orderId = Long.valueOf(getInput());
+				String orderIdString = getInput();
+				orderId = Long.valueOf(orderIdString);
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info(integerInput);
 			}
 		} while (orderId == null || orderId < 0);
 		List<OrderLine> orderLines = orderLineService.readOrder(orderId);
@@ -112,7 +114,7 @@ public class OrderLineController {
 				LOGGER.info("Please enter the id of the order you would like calculate the total cost for");
 				orderId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info(integerInput);
 			}
 		} while (orderId == null || orderId < 0);
 		BigDecimal totalCost = orderLineService.calculate(orderId);

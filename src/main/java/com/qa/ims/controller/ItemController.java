@@ -26,6 +26,8 @@ public class ItemController implements CrudController<Item> {
 	/**
 	 * Creates a customer by taking in user input
 	 */
+	private String integerInput = "Please enter an integer (only).";
+
 	@Override
 	public Item create() {
 
@@ -52,7 +54,7 @@ public class ItemController implements CrudController<Item> {
 				LOGGER.info("Please enter the current stock size of the item");
 				stock = Long.parseLong(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info(integerInput);
 			}
 		} while (stock == null || stock < 0);
 
@@ -102,7 +104,7 @@ public class ItemController implements CrudController<Item> {
 				LOGGER.info("Please enter the id of the item you would like to update");
 				id = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info(integerInput);
 			}
 		} while (id == null);
 
@@ -125,7 +127,7 @@ public class ItemController implements CrudController<Item> {
 				LOGGER.info("Please enter the current stock size of the item");
 				stock = Long.parseLong(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter an integer (only).");
+				LOGGER.info(integerInput);
 			}
 		} while (stock == null || stock < 0);
 

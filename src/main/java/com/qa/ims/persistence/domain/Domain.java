@@ -2,8 +2,6 @@ package com.qa.ims.persistence.domain;
 
 import org.apache.log4j.Logger;
 
-import com.qa.ims.utils.Utils;
-
 public enum Domain {
 
 	CUSTOMER("Information about customers"), ITEM("Individual Items"), ORDER("Purchases of items"),
@@ -11,11 +9,11 @@ public enum Domain {
 
 	public static final Logger LOGGER = Logger.getLogger(Domain.class);
 
-	public static Domain getDomain() {
+	public static Domain setDomain(String input) {
 		Domain domain;
 		while (true) {
 			try {
-				domain = Domain.valueOf(Utils.getInput().toUpperCase());
+				domain = Domain.valueOf(input.toUpperCase());
 				break;
 
 			} catch (IllegalArgumentException e) {

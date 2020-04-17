@@ -51,7 +51,7 @@ public class OrderControllerTest {
 		String custId = "1";
 		String date = "2020-4-1";
 
-		Mockito.doReturn(custId, date).when(orderController).getInput();
+		Mockito.doReturn(custId, "no", "2020-4-40", "30.2-20.3-29.3", date).when(orderController).getInput();
 		Long custIdConverted = Long.valueOf(custId);
 		Order order = new Order(custIdConverted, date, BigDecimal.valueOf(0));
 		Order savedOrder = new Order(1L, "2020-4-1", BigDecimal.valueOf(0));
@@ -69,7 +69,7 @@ public class OrderControllerTest {
 		String date = "2020-4-1";
 		String totalPrice = "1.49";
 
-		Mockito.doReturn(orderId, custId, date, totalPrice).when(orderController).getInput();
+		Mockito.doReturn("hello", orderId, "yes", custId, "no", date, totalPrice).when(orderController).getInput();
 		Long orderIdConverted = Long.parseLong(orderId);
 		Long custIdConverted = Long.parseLong(custId);
 		BigDecimal totalPriceConverted = BigDecimal.valueOf(Double.parseDouble(totalPrice));

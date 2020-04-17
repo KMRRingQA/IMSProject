@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,8 +40,8 @@ public class ItemDaoMysqlTest {
 	@InjectMocks
 	private ItemController itemController;
 
-	@Test
-	public void aInit() {
+	@BeforeClass
+	public static void aInit() {
 		Ims ims = new Ims();
 		ims.init("jdbc:mysql://34.67.113.137:3306/", "root", "root", "src/test/resources/sql-schema.sql");
 	}

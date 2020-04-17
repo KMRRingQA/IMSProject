@@ -52,11 +52,15 @@ public class Ims {
 		}
 	}
 
+	String getInput() {
+		return Utils.getInput();
+	}
+
 	public void imsSystem() {
 		LOGGER.info("Enter username");
-		String username = Utils.getInput();
+		String username = getInput();
 		LOGGER.info("Enter password");
-		String password = Utils.getInput();
+		String password = getInput();
 
 		init(username, password);
 
@@ -64,11 +68,14 @@ public class Ims {
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
 
-			Domain domain = Domain.getDomain();
+			String domainselect = getInput();
+			Domain domain = Domain.setDomain(domainselect);
+
 			if (domain.name().equalsIgnoreCase("stop")) {
 				LOGGER.info("Program exiting...");
 				break;
 			}
+
 			LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
 
 			if (domain.name().equalsIgnoreCase("order")) {
@@ -76,7 +83,8 @@ public class Ims {
 			} else {
 				Action.printActions();
 			}
-			Action action = Action.getAction();
+			String actionselect = getInput();
+			Action action = Action.setAction(actionselect);
 
 			switch (domain) {
 			case CUSTOMER:
@@ -121,8 +129,6 @@ public class Ims {
 		case CALCULATE:
 			orderLineController.calculateOrderPrice();
 			break;
-		case RETURN:
-			break;
 		default:
 			break;
 		}
@@ -157,23 +163,6 @@ public class Ims {
 			}
 			LOGGER.error(e.getMessage());
 		}
-	}
-
-	public String readFile(String fileLocation) {
-		StringBuilder stringBuilder = new StringBuilder();
-		try (BufferedReader br = new BufferedReader(new FileReader(fileLocation));) {
-			String string;
-			while ((string = br.readLine()) != null) {
-				stringBuilder.append(string);
-				stringBuilder.append("\r\n");
-			}
-		} catch (IOException e) {
-			for (StackTraceElement ele : e.getStackTrace()) {
-				LOGGER.debug(ele);
-			}
-			LOGGER.error(e.getMessage());
-		}
-		return stringBuilder.toString();
 	}
 
 }

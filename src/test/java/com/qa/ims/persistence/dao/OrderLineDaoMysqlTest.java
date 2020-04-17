@@ -40,7 +40,7 @@ public class OrderLineDaoMysqlTest {
 	private OrderLineController orderLineController;
 
 	@BeforeClass
-	public void aInit() {
+	public static void aInit() {
 		Ims ims = new Ims();
 		ims.init("jdbc:mysql://34.67.113.137:3306/", "root", "root", "src/test/resources/sql-schema.sql");
 	}

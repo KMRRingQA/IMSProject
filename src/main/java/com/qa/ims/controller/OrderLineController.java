@@ -33,8 +33,8 @@ public class OrderLineController {
 		Long orderId = null;
 		Long itemId = null;
 		Long quantity = null;
-		String action = null;
-		String stop = "n";
+		String action;
+		String stop;
 
 		LOGGER.info("Would you like to add or remove an item from your order?");
 		do {

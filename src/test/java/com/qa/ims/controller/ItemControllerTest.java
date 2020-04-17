@@ -74,6 +74,7 @@ public class ItemControllerTest {
 		Mockito.doReturn(id, name, price, stock).when(itemController).getInput();
 		BigDecimal priceConverted = BigDecimal.valueOf(Double.parseDouble(price));
 		Long stockConverted = Long.parseLong(stock);
+
 		Item item = new Item(2L, name, priceConverted, stockConverted);
 		Mockito.when(itemServices.update(item)).thenReturn(item);
 		assertEquals(itemController.update(), item);

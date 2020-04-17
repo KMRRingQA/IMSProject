@@ -49,7 +49,7 @@ public class ItemDaoMysql implements Dao<Item> {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
-		return null;
+		return item;
 	}
 
 	/**

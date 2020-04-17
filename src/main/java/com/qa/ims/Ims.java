@@ -52,30 +52,11 @@ public class Ims {
 		}
 	}
 
-	public static String getUsername() {
-		return username;
-	}
-
-	public static String getPassword() {
-		return password;
-	}
-
-	public static void setUsername(String username) {
-		Ims.username = username;
-	}
-
-	public static void setPassword(String password) {
-		Ims.password = password;
-	}
-
-	private static String username;
-	private static String password;
-
 	public void imsSystem() {
 		LOGGER.info("Enter username");
-		username = Utils.getInput();
+		String username = Utils.getInput();
 		LOGGER.info("Enter password");
-		password = Utils.getInput();
+		String password = Utils.getInput();
 
 		init(username, password);
 

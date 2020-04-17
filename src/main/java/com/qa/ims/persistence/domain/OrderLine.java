@@ -14,6 +14,12 @@ public class OrderLine {
 		this.quantity = quantity;
 	}
 
+	public OrderLine(Long orderLineId, Long orderId, Long itemId, Long quantity) {
+		this.orderId = orderId;
+		this.itemId = itemId;
+		this.quantity = quantity;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

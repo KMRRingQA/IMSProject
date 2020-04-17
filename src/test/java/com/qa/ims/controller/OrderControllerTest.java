@@ -21,7 +21,7 @@ import com.qa.ims.services.OrderServices;
 public class OrderControllerTest {
 
 	/**
-	 * The thing I want to fake functionlity for
+	 * The thing I want to fake functionality for
 	 */
 	@Mock
 	private OrderServices orderServices;

@@ -47,8 +47,9 @@ public enum Action {
 	}
 
 	public static void printOrderActions() {
-		for (Action action : Action.values()) {
-			LOGGER.info(action.getDescription());
+		Action[] action = Action.values();
+		for (int i = 0; i < 7; i++) {
+			LOGGER.info(action[i].getDescription());
 		}
 	}
 

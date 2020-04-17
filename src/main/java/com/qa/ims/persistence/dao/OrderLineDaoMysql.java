@@ -51,7 +51,7 @@ public class OrderLineDaoMysql implements DaoOrderLine<OrderLine> {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
-		return null;
+		return orderLine;
 	}
 
 	OrderLine orderListFromResultSet(ResultSet resultSet) throws SQLException {
@@ -65,7 +65,7 @@ public class OrderLineDaoMysql implements DaoOrderLine<OrderLine> {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement
-						.executeQuery("SELECT * FROM orderLine ORDER BY order_id DESC LIMIT 1");) {
+						.executeQuery("SELECT * FROM orderLine ORDER BY orderline_id DESC LIMIT 1");) {
 			resultSet.next();
 			return orderListFromResultSet(resultSet);
 		} catch (Exception e) {

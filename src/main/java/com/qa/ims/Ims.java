@@ -52,11 +52,17 @@ public class Ims {
 		}
 	}
 
+	String getInput() {
+		return Utils.getInput();
+	}
+
 	public void imsSystem() {
 		LOGGER.info("Enter username");
-		String username = Utils.getInput();
+		String username = getInput();
+		System.out.println(username);
 		LOGGER.info("Enter password");
-		String password = Utils.getInput();
+		String password = getInput();
+		System.out.println(password);
 
 		init(username, password);
 

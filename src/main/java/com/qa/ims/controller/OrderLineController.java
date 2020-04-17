@@ -79,9 +79,6 @@ public class OrderLineController {
 		return orderLineService.changeItems(new OrderLine(orderId, itemId, quantity));
 	}
 
-//	Order order = orderService.update(new Order(orderId, custId, date, totalPrice));
-//	LOGGER.info("Order Updated");
-//	return order;
 	public List<OrderLine> readItemsInOrder() {
 		Long orderId = null;
 		do {

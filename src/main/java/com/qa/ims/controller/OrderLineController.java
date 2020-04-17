@@ -41,7 +41,6 @@ public class OrderLineController {
 			orderId = null;
 			itemId = null;
 			quantity = null;
-			action = null;
 			LOGGER.info("ADD: To add an item to an order");
 			LOGGER.info("REMOVE: To remove an item from an order");
 			do {

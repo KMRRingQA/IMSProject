@@ -72,6 +72,8 @@ public class OrderLineDaoMysqlTest {
 
 //	@Test
 //	public void eReadOrderLineTest() {
+//
+//	public void eCalculate() {
 //		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
 //		OrderLine orderLine = new OrderLine(1L, 1L, "2020-04-16 00:00:00",
 //				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -93,6 +95,7 @@ public class OrderLineDaoMysqlTest {
 //		assertEquals(orderLine, orderLineDaoMysql.update(orderLine));
 //	}
 //
+////
 //	/**
 //	 * Delete doesn't return anything, but we can readall afterwards to make sure
 //	 * that it has been deleted.
@@ -107,5 +110,4 @@ public class OrderLineDaoMysqlTest {
 //				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP)));
 //		assertEquals(orderLines, orderLineDaoMysql.readAll());
 //	}
-
 }

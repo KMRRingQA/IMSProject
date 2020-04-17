@@ -27,12 +27,6 @@ public class ItemDaoMysql implements Dao<Item> {
 		this.password = password;
 	}
 
-	public ItemDaoMysql(String jdbcConnectionUrl, String username, String password) {
-		this.jdbcConnectionUrl = jdbcConnectionUrl;
-		this.username = username;
-		this.password = password;
-	}
-
 	/**
 	 * Creates a customer in the database
 	 *

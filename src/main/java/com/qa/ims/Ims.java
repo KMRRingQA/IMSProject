@@ -56,7 +56,7 @@ public class Ims {
 		return Utils.getInput();
 	}
 
-	public void imsSystem() {
+	public String imsSystem() {
 		LOGGER.info("Enter username");
 		String username = getInput();
 		LOGGER.info("Enter password");
@@ -114,6 +114,7 @@ public class Ims {
 				LOGGER.info("Task finished.\n");
 			}
 		}
+		return "Program finished succesfully";
 	}
 
 	public void doOrderLineAction(Action action, String username, String password) {

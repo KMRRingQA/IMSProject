@@ -28,18 +28,17 @@ public class ItemController implements CrudController<Item> {
 	 */
 	private String integerInput = "Please enter an integer (only).";
 
-	@Override
-	public Item create() {
-
-		String name = null;
-		BigDecimal price = null;
-		Long stock = null;
-
+	private String getName() {
+		String name;
 		do {
 			LOGGER.info("Please enter item name");
 			name = getInput();
 		} while (name.isEmpty());
+		return name;
+	}
 
+	private BigDecimal getPrice() {
+		BigDecimal price = null;
 		do {
 			try {
 				LOGGER.info("Please enter the price of the item (€)");
@@ -48,7 +47,11 @@ public class ItemController implements CrudController<Item> {
 				LOGGER.info("Please enter a decimal number (only).");
 			}
 		} while (price == null || price.intValue() < 0);
+		return price;
+	}
 
+	private Long getStock() {
+		Long stock = null;
 		do {
 			try {
 				LOGGER.info("Please enter the current stock size of the item");
@@ -57,6 +60,15 @@ public class ItemController implements CrudController<Item> {
 				LOGGER.info(integerInput);
 			}
 		} while (stock == null || stock < 0);
+		return stock;
+	}
+
+	@Override
+	public Item create() {
+
+		String name = getName();
+		BigDecimal price = getPrice();
+		Long stock = getStock();
 
 		Item item = itemService.create(new Item(name, price, stock));
 		LOGGER.info("Item created");
@@ -95,9 +107,6 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public Item update() {
 		Long id = null;
-		String name = null;
-		BigDecimal price = null;
-		Long stock = null;
 
 		do {
 			try {
@@ -108,28 +117,9 @@ public class ItemController implements CrudController<Item> {
 			}
 		} while (id == null);
 
-		do {
-			LOGGER.info("Please enter item name");
-			name = getInput();
-		} while (name.isEmpty());
-
-		do {
-			try {
-				LOGGER.info("Please enter the price of the item (€)");
-				price = BigDecimal.valueOf(Double.parseDouble(getInput()));
-			} catch (NumberFormatException nfe) {
-				LOGGER.info("Please enter a decimal number (only).");
-			}
-		} while (price == null || price.intValue() < 0);
-
-		do {
-			try {
-				LOGGER.info("Please enter the current stock size of the item");
-				stock = Long.parseLong(getInput());
-			} catch (NumberFormatException nfe) {
-				LOGGER.info(integerInput);
-			}
-		} while (stock == null || stock < 0);
+		String name = getName();
+		BigDecimal price = getPrice();
+		Long stock = getStock();
 
 		Item item = itemService.update(new Item(id, name, price, stock));
 		LOGGER.info("Item Updated");

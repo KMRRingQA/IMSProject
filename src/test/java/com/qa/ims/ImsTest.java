@@ -1,94 +1,48 @@
 package com.qa.ims;
 
-import static org.junit.Assert.assertEquals;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.qa.ims.controller.OrderController;
-import com.qa.ims.persistence.domain.Order;
-import com.qa.ims.services.OrderServices;
+import com.qa.ims.persistence.domain.Item;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ImsTest {
 
-	/**
-	 * The thing I want to fake functionality for
-	 */
 	@Mock
-	private Ims;
+	private Order customerController;
 
-	/**
-	 * Spy is used because i want to mock some methods inside the order I'm testing
-	 * InjectMocks uses dependency injection to insert the mock into the order
-	 * controller
-	 */
-	@Spy
 	@InjectMocks
-	private OrderController orderController;
+	private Ims ims;
 
 	@Test
-	public void readAllTest() {
-		OrderController orderController = new OrderController(orderServices);
-		List<Order> orders = new ArrayList<>();
-		orders.add(new Order(1L, 1L, "2020-4-1", BigDecimal.valueOf(14.99)));
-		orders.add(new Order(2L, 1L, "2021-4-19", BigDecimal.valueOf(2.49)));
-		orders.add(new Order(3L, 1L, "2020-4-18", BigDecimal.valueOf(299.49)));
-		Mockito.when(orderServices.readAll()).thenReturn(orders);
-		assertEquals(orders, orderController.readAll());
+	public void itemServicesCreate() {
+		Item item = new Item("Minecraft", BigDecimal.valueOf(14.99), 100l);
+		itemServices.create(item);
+		Mockito.verify(itemDao, Mockito.times(1)).create(item);
 	}
 
 	@Test
-	public void createTest() {
-		String custId = "1";
-		String date = "2020-4-1";
-
-		Mockito.doReturn(custId, date).when(orderController).getInput();
-		Long custIdConverted = Long.valueOf(custId);
-		Order order = new Order(custIdConverted, date, BigDecimal.valueOf(0));
-		Order savedOrder = new Order(1L, "2020-4-1", BigDecimal.valueOf(0));
-		Mockito.when(orderServices.create(order)).thenReturn(savedOrder);
-		assertEquals(savedOrder, orderController.create());
+	public void itemServicesRead() {
+		itemServices.readAll();
+		Mockito.verify(itemDao, Mockito.times(1)).readAll();
 	}
 
-	/**
-	 * 
-	 */
 	@Test
-	public void updateTest() {
-		String orderId = "2";
-		String custId = "2";
-		String date = "2020-4-1";
-		String totalPrice = "1.49";
-
-		Mockito.doReturn(orderId, custId, date, totalPrice).when(orderController).getInput();
-		Long orderIdConverted = Long.parseLong(orderId);
-		Long custIdConverted = Long.parseLong(custId);
-		BigDecimal totalPriceConverted = BigDecimal.valueOf(Double.parseDouble(totalPrice));
-		Order order = new Order(orderIdConverted, custIdConverted, date, totalPriceConverted);
-		Mockito.when(orderServices.update(order)).thenReturn(order);
-		assertEquals(orderController.update(), order);
+	public void itemServicesUpdate() {
+		Item item = new Item("Minecraft", BigDecimal.valueOf(14.99), 100l);
+		itemServices.update(item);
+		Mockito.verify(itemDao, Mockito.times(1)).update(item);
 	}
 
-	/**
-	 * Delete doesn't return anything, so we can just verify that it calls the
-	 * delete method
-	 */
 	@Test
-	public void deleteTest() {
-		String id = "1";
-		Mockito.doReturn(id).when(orderController).getInput();
-		orderController.delete();
-		Mockito.verify(orderServices, Mockito.times(1)).delete(1L);
+	public void itemServicesDelete() {
+		itemServices.delete(1L);
+		Mockito.verify(itemDao, Mockito.times(1)).delete(1L);
 	}
-
 }

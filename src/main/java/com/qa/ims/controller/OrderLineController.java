@@ -27,7 +27,7 @@ public class OrderLineController {
 		return Utils.getInput();
 	}
 
-	private String IntegerInput = "Please enter an integer (only).";
+	private String integerInput = "Please enter an integer (only).";
 
 	public OrderLine changeItems() {
 		Long orderId = null;
@@ -52,7 +52,7 @@ public class OrderLineController {
 					LOGGER.info("Please enter the id of the order you would like add/remove an item to/from");
 					orderId = Long.valueOf(getInput());
 				} catch (NumberFormatException nfe) {
-					LOGGER.info(IntegerInput);
+					LOGGER.info(integerInput);
 				}
 			} while (orderId == null || orderId < 0);
 
@@ -61,7 +61,7 @@ public class OrderLineController {
 					LOGGER.info("Please enter the id of the item you would like to add/remove");
 					itemId = Long.valueOf(getInput());
 				} catch (NumberFormatException nfe) {
-					LOGGER.info(IntegerInput);
+					LOGGER.info(integerInput);
 				}
 			} while (itemId == null || itemId < 0);
 
@@ -76,7 +76,7 @@ public class OrderLineController {
 							quantity = Long.valueOf(tempString);
 						}
 					} catch (NumberFormatException | NullPointerException nfeNpe) {
-						LOGGER.info(IntegerInput);
+						LOGGER.info(integerInput);
 						quantity = 1l;
 					}
 				} while (quantity == null || quantity < 1l);
@@ -97,7 +97,7 @@ public class OrderLineController {
 				String orderIdString = getInput();
 				orderId = Long.valueOf(orderIdString);
 			} catch (NumberFormatException nfe) {
-				LOGGER.info(IntegerInput);
+				LOGGER.info(integerInput);
 			}
 		} while (orderId == null || orderId < 0);
 		List<OrderLine> orderLines = orderLineService.readOrder(orderId);
@@ -114,7 +114,7 @@ public class OrderLineController {
 				LOGGER.info("Please enter the id of the order you would like calculate the total cost for");
 				orderId = Long.valueOf(getInput());
 			} catch (NumberFormatException nfe) {
-				LOGGER.info(IntegerInput);
+				LOGGER.info(integerInput);
 			}
 		} while (orderId == null || orderId < 0);
 		BigDecimal totalCost = orderLineService.calculate(orderId);

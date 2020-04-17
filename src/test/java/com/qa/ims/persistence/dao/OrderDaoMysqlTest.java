@@ -113,4 +113,14 @@ public class OrderDaoMysqlTest {
 		assertEquals(orders, orderDaoMysql.readAll());
 	}
 
+	@Test
+	public void hCreateWithoutDateTest() {
+		OrderDaoMysql orderDaoMysql = new OrderDaoMysql("root", "root");
+		Long custId = 1L;
+		String date = "";
+		BigDecimal totalPrice = BigDecimal.valueOf(0.0);
+		Order order = new Order(custId, date, totalPrice);
+		assertEquals(order, orderDaoMysql.create(order));
+	}
+
 }

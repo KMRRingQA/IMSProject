@@ -93,7 +93,8 @@ public class OrderLineController {
 		do {
 			try {
 				LOGGER.info("Please enter the id of the order you would like read");
-				orderId = Long.valueOf(getInput());
+				String orderIdString = getInput();
+				orderId = Long.valueOf(orderIdString);
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Please enter an integer (only).");
 			}

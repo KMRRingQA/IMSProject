@@ -3,6 +3,8 @@ package com.qa.ims.controller;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +40,7 @@ public class OrderLineControllerTest {
 		String itemId = "1";
 		String quantity = "1";
 
-		Mockito.doReturn(action, orderId, itemId, quantity).when(orderLineController).getInput();
+		Mockito.doReturn(action, orderId, itemId, "0.1", quantity).when(orderLineController).getInput();
 		Long orderIdConverted = Long.valueOf(orderId);
 		Long itemIdConverted = Long.valueOf(itemId);
 		Long quantityConverted = Long.valueOf(quantity);
@@ -54,7 +56,7 @@ public class OrderLineControllerTest {
 		String orderId = "1";
 		String itemId = "1";
 
-		Mockito.doReturn(action, orderId, itemId).when(orderLineController).getInput();
+		Mockito.doReturn("hello", action, "0.1", orderId, "0.1", itemId).when(orderLineController).getInput();
 		Long orderIdConverted = Long.valueOf(orderId);
 		Long itemIdConverted = Long.valueOf(itemId);
 		OrderLine orderLine = new OrderLine(orderIdConverted, itemIdConverted, null);
@@ -63,23 +65,22 @@ public class OrderLineControllerTest {
 		assertEquals(savedOrderLine, orderLineController.changeItems());
 	}
 
-//	@Test
-//	public void readItemsInOrderTest() {
-//		Mockito.doReturn("1").when(orderLineController).getInput();
-//		OrderLineController orderLineController = new OrderLineController(orderLineServices);
-//		List<OrderLine> orderLines = new ArrayList<>();
-//		orderLines.add(new OrderLine(1L, 2L, 1L));
-//		orderLines.add(new OrderLine(1L, 1L, 3L));
-//		Mockito.when(orderLineServices.readOrder(1L)).thenReturn(orderLines);
-//		System.out.println("orderLines:" + orderLines.toString());
-//		System.out.println("orderLineControllerOutput: " + orderLineController.readItemsInOrder().toString());
-//		assertEquals(orderLines, orderLineController.readItemsInOrder());
-//	}
+	@Test
+	public void readItemsInOrderTest() {
+		Mockito.doReturn("0.1", "1").when(orderLineController).getInput();
+		List<OrderLine> orderLines = new ArrayList<>();
+		orderLines.add(new OrderLine(1L, 2L, 1L));
+		orderLines.add(new OrderLine(1L, 1L, 3L));
+		Mockito.when(orderLineServices.readOrder(1L)).thenReturn(orderLines);
+		System.out.println("orderLines:" + orderLines.toString());
+		System.out.println("orderLineControllerOutput: " + orderLineController.readItemsInOrder().toString());
+		assertEquals(orderLines, orderLineController.readItemsInOrder());
+	}
 
 	@Test
 	public void calculateOrderPriceTest() {
 		String id = "1";
-		Mockito.doReturn(id).when(orderLineController).getInput();
+		Mockito.doReturn("0.1", id).when(orderLineController).getInput();
 
 		Mockito.when(orderLineServices.calculate(Long.valueOf(id))).thenReturn(BigDecimal.valueOf(47.96));
 		assertEquals(BigDecimal.valueOf(47.96), orderLineController.calculateOrderPrice());

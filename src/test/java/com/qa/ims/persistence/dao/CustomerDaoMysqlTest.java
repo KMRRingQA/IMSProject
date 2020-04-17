@@ -54,7 +54,7 @@ public class CustomerDaoMysqlTest {
 	}
 
 	@Test
-	public void cReadLatestTest() {
+	public void cReadAllTest() {
 		CustomerDaoMysql customerDaoMysql = new CustomerDaoMysql("root", "root");
 		List<Customer> customers = new ArrayList<>();
 		customers.add(new Customer(1L, "Luke", "Conway"));
@@ -63,7 +63,7 @@ public class CustomerDaoMysqlTest {
 	}
 
 	@Test
-	public void dReadAllTest() {
+	public void dReadLatestTest() {
 		CustomerDaoMysql customerDaoMysql = new CustomerDaoMysql("root", "root");
 		Customer customer = new Customer(2L, "Korbinian", "Ring");
 		assertEquals(customer, customerDaoMysql.readLatest());

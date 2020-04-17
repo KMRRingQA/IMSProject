@@ -26,21 +26,8 @@ public class OrderController implements CrudController<Order> {
 		this.orderService = orderService;
 	}
 
-	@Override
-	public Order create() {
-		Long custId = null;
+	private String date() {
 		String date = null;
-		BigDecimal totalPrice = BigDecimal.valueOf(0);
-
-		do {
-			try {
-				LOGGER.info("Please enter the customer ID associated with the Order.");
-				custId = Long.valueOf(getInput());
-			} catch (NumberFormatException nfe) {
-				LOGGER.info(notAnInteger);
-			}
-		} while (custId == null || custId < 0);
-
 		boolean format;
 		boolean exception;
 		LOGGER.info(enterDate);
@@ -60,6 +47,24 @@ public class OrderController implements CrudController<Order> {
 				exception = true;
 			}
 		} while ((!format && date != null) || exception);
+		return date;
+	}
+
+	@Override
+	public Order create() {
+		Long custId = null;
+		BigDecimal totalPrice = BigDecimal.valueOf(0);
+
+		do {
+			try {
+				LOGGER.info("Please enter the customer ID associated with the Order.");
+				custId = Long.valueOf(getInput());
+			} catch (NumberFormatException nfe) {
+				LOGGER.info(notAnInteger);
+			}
+		} while (custId == null || custId < 0);
+
+		String date = date();
 
 		Order order = orderService.create(new Order(custId, date, totalPrice));
 		LOGGER.info("Order created");
@@ -97,7 +102,6 @@ public class OrderController implements CrudController<Order> {
 	public Order update() {
 		Long orderId = null;
 		Long custId = null;
-		String date = null;
 		BigDecimal totalPrice = BigDecimal.valueOf(0);
 
 		do {
@@ -118,25 +122,7 @@ public class OrderController implements CrudController<Order> {
 			}
 		} while (custId == null || custId < 0);
 
-		boolean format;
-		boolean exception;
-		LOGGER.info(enterDate);
-		do {
-			exception = false;
-			format = true;
-			try {
-				date = getInput();
-				if (!date.isEmpty() && (date.split("-").length != 3 || Integer.valueOf(date.split("-")[0]) > 3000
-						|| Integer.valueOf(date.split("-")[0]) < 2010 || Integer.valueOf(date.split("-")[1]) > 12
-						|| Integer.valueOf(date.split("-")[2]) > 31)) {
-					format = false;
-					LOGGER.info(enterDate);
-				}
-			} catch (ArrayIndexOutOfBoundsException | NumberFormatException aioobeNfe) {
-				LOGGER.info(enterDate);
-				exception = true;
-			}
-		} while ((!format && date != null) || exception);
+		String date = date();
 
 		do {
 			try {

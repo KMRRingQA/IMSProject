@@ -65,10 +65,12 @@ public class Ims {
 			Domain.printDomains();
 
 			Domain domain = Domain.getDomain();
+
 			if (domain.name().equalsIgnoreCase("stop")) {
 				LOGGER.info("Program exiting...");
 				break;
 			}
+
 			LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
 
 			if (domain.name().equalsIgnoreCase("order")) {

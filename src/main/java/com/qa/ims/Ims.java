@@ -59,10 +59,8 @@ public class Ims {
 	public void imsSystem() {
 		LOGGER.info("Enter username");
 		String username = getInput();
-		System.out.println(username);
 		LOGGER.info("Enter password");
 		String password = getInput();
-		System.out.println(password);
 
 		init(username, password);
 
@@ -70,7 +68,8 @@ public class Ims {
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
 
-			Domain domain = Domain.getDomain();
+			String domainselect = getInput();
+			Domain domain = Domain.setDomain(domainselect);
 
 			if (domain.name().equalsIgnoreCase("stop")) {
 				LOGGER.info("Program exiting...");

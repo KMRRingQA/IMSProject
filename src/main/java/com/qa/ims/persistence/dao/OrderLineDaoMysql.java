@@ -27,12 +27,6 @@ public class OrderLineDaoMysql implements DaoOrderLine<OrderLine> {
 		this.password = password;
 	}
 
-	public OrderLineDaoMysql(String jdbcConnectionUrl, String username, String password) {
-		this.jdbcConnectionUrl = jdbcConnectionUrl;
-		this.username = username;
-		this.password = password;
-	}
-
 	public OrderLine changeItems(OrderLine orderLine) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {

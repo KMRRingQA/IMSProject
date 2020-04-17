@@ -27,12 +27,6 @@ public class OrderDaoMysql implements Dao<Order> {
 		this.password = password;
 	}
 
-	public OrderDaoMysql(String jdbcConnectionUrl, String username, String password) {
-		this.jdbcConnectionUrl = jdbcConnectionUrl;
-		this.username = username;
-		this.password = password;
-	}
-
 	/**
 	 * Creates a customer in the database
 	 *

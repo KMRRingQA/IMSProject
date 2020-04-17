@@ -69,9 +69,10 @@ public class OrderLineDaoMysqlTest {
 		OrderLine orderLine = new OrderLine(1L, 1L, 10L);
 		assertEquals(orderLine, orderLineDaoMysql.readLatest());
 	}
-}
+
 //	@Test
 //	public void eReadOrderLineTest() {
+//
 //	public void eCalculate() {
 //		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
 //		OrderLine orderLine = new OrderLine(1L, 1L, "2020-04-16 00:00:00",
@@ -109,3 +110,4 @@ public class OrderLineDaoMysqlTest {
 //				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP)));
 //		assertEquals(orderLines, orderLineDaoMysql.readAll());
 //	}
+}

@@ -48,7 +48,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
-		return null;
+		return customer;
 	}
 
 	Customer customerFromResultSet(ResultSet resultSet) throws SQLException {

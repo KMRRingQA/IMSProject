@@ -103,7 +103,7 @@ public class Ims {
 					OrderController orderController = new OrderController(
 							new OrderServices(new OrderDaoMysql(username, password)));
 					doAction(orderController, action);
-				} else if (name.equals("orderitems") || name.equals("readorder") || name.equals("calculate")) {
+				} else {
 					doOrderLineAction(action, username, password);
 				}
 				break;

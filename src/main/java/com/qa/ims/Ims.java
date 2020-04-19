@@ -150,19 +150,12 @@ public class Ims {
 	 * @param password
 	 */
 	public void init(String username, String password) {
-		init(jdbcConnectionUrl, username, password, "src/main/resources/sql-schema.sql");
+		init("jdbc:mysql://34.67.113.137:3306/", username, password, "src/main/resources/sql-schema.sql");
 	}
 
 	/**
 	 * To initialise the database with the schema needed to run the application
 	 */
-
-	private static String jdbcConnectionUrl = "jdbc:mysql://34.67.113.137:3306/";
-
-	public static String getJdbcConnectionUrl() {
-		return jdbcConnectionUrl;
-	}
-
 	public void init(String jdbcConnectionUrl, String username, String password, String fileLocation) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				BufferedReader br = new BufferedReader(new FileReader(fileLocation));) {

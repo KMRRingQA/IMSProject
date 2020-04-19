@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.qa.ims.Ims;
 import com.qa.ims.persistence.domain.Customer;
 
 public class CustomerDaoMysql implements DaoCRUD<Customer> {
@@ -23,7 +22,7 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 	private String password;
 
 	public CustomerDaoMysql(String username, String password) {
-		this.jdbcConnectionUrl = Ims.getJdbcConnectionUrl();
+		this.jdbcConnectionUrl = "jdbc:mysql://34.67.113.137:3306/ims";
 		this.username = username;
 		this.password = password;
 	}

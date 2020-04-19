@@ -3,7 +3,7 @@ package com.qa.ims.persistence.dao;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface DaoOrderLine<T> {
+public interface DaoLine<T> {
 
 	BigDecimal calculate(Long id);
 

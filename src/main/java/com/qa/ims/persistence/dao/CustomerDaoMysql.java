@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Customer;
 
-public class CustomerDaoMysql implements Dao<Customer> {
+public class CustomerDaoMysql implements DaoCRUD<Customer> {
 
 	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
 

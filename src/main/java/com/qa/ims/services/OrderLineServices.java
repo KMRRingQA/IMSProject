@@ -3,14 +3,14 @@ package com.qa.ims.services;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.qa.ims.persistence.dao.DaoOrderLine;
+import com.qa.ims.persistence.dao.DaoLine;
 import com.qa.ims.persistence.domain.OrderLine;
 
-public class OrderLineServices implements OLServices<OrderLine> {
+public class OrderLineServices implements LineServices<OrderLine> {
 
-	private DaoOrderLine<OrderLine> orderLineDao;
+	private DaoLine<OrderLine> orderLineDao;
 
-	public OrderLineServices(DaoOrderLine<OrderLine> orderLineDao) {
+	public OrderLineServices(DaoLine<OrderLine> orderLineDao) {
 		this.orderLineDao = orderLineDao;
 	}
 

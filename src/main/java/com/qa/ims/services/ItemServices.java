@@ -2,14 +2,14 @@ package com.qa.ims.services;
 
 import java.util.List;
 
-import com.qa.ims.persistence.dao.Dao;
+import com.qa.ims.persistence.dao.DaoCRUD;
 import com.qa.ims.persistence.domain.Item;
 
 public class ItemServices implements CrudServices<Item> {
 
-	private Dao<Item> itemDao;
+	private DaoCRUD<Item> itemDao;
 
-	public ItemServices(Dao<Item> itemDao) {
+	public ItemServices(DaoCRUD<Item> itemDao) {
 		this.itemDao = itemDao;
 	}
 

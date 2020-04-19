@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.qa.ims.persistence.domain.OrderLine;
-import com.qa.ims.services.OLServices;
+import com.qa.ims.services.LineServices;
 import com.qa.ims.utils.Utils;
 
 /**
@@ -17,9 +17,9 @@ public class OrderLineController {
 
 	public static final Logger LOGGER = Logger.getLogger(OrderLineController.class);
 
-	private OLServices<OrderLine> orderLineService;
+	private LineServices<OrderLine> orderLineService;
 
-	public OrderLineController(OLServices<OrderLine> orderLineService) {
+	public OrderLineController(LineServices<OrderLine> orderLineService) {
 		this.orderLineService = orderLineService;
 	}
 

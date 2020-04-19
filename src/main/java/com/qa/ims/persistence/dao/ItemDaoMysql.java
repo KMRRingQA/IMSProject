@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Item;
 
-public class ItemDaoMysql implements Dao<Item> {
+public class ItemDaoMysql implements DaoCRUD<Item> {
 
 	public static final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
 
@@ -125,6 +125,7 @@ public class ItemDaoMysql implements Dao<Item> {
 	 *             that customer in the database
 	 * @return
 	 */
+
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);

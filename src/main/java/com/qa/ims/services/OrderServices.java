@@ -2,14 +2,14 @@ package com.qa.ims.services;
 
 import java.util.List;
 
-import com.qa.ims.persistence.dao.Dao;
+import com.qa.ims.persistence.dao.DaoCRUD;
 import com.qa.ims.persistence.domain.Order;
 
 public class OrderServices implements CrudServices<Order> {
 
-	private Dao<Order> orderDao;
+	private DaoCRUD<Order> orderDao;
 
-	public OrderServices(Dao<Order> orderDao) {
+	public OrderServices(DaoCRUD<Order> orderDao) {
 		this.orderDao = orderDao;
 	}
 

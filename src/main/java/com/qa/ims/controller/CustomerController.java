@@ -110,4 +110,24 @@ public class CustomerController implements CrudController<Customer> {
 		return customer;
 	}
 
+	@Override
+	public List<Customer> searchName() {
+		String name = null;
+		do {
+			try {
+				LOGGER.info("Please enter the first and last name of the customer you would like to find");
+				name = getInput();
+			} catch (Exception e) {
+				LOGGER.info("Please try again.");
+			}
+		} while (!(name.split(" ").length == 2));
+
+		List<Customer> customers = customerService.searchName(name);
+
+		for (Customer customer : customers) {
+			LOGGER.info(customer.toString());
+		}
+		return customers;
+	}
+
 }

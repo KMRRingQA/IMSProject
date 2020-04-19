@@ -11,4 +11,6 @@ public interface DaoCRUD<T> {
 	List<T> readAll();
 
 	T update(T t);
+
+	List<T> searchName(String name);
 }

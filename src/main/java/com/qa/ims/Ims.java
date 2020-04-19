@@ -45,6 +45,9 @@ public class Ims {
 		case DELETE:
 			crudController.delete();
 			break;
+		case SEARCH:
+			crudController.searchName();
+			break;
 		case RETURN:
 			break;
 		default:
@@ -99,7 +102,8 @@ public class Ims {
 				break;
 			case ORDER:
 				String name = action.name().toLowerCase();
-				if (name.equals("create") || name.equals("read") || name.equals("update") || name.equals("delete")) {
+				if (name.equals("create") || name.equals("read") || name.equals("update") || name.equals("delete")
+						|| name.equals("search")) {
 					OrderController orderController = new OrderController(
 							new OrderServices(new OrderDaoMysql(username, password)));
 					doAction(orderController, action);

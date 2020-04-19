@@ -32,4 +32,9 @@ public class OrderServices implements CrudServices<Order> {
 	public Order update(Order order) {
 		return orderDao.update(order);
 	}
+
+	@Override
+	public List<Order> searchName(String name) {
+		return orderDao.searchName(name);
+	}
 }

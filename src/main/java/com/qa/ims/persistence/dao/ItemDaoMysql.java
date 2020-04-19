@@ -140,4 +140,22 @@ public class ItemDaoMysql implements DaoCRUD<Item> {
 		return null;
 	}
 
+	@Override
+	public List<Item> searchName(String name) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("select * from items where lower(name) = '" + name + "';");) {
+			ArrayList<Item> items = new ArrayList<>();
+			while (resultSet.next()) {
+				items.add(itemFromResultSet(resultSet));
+			}
+			return items;
+		} catch (SQLException e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
+	}
+
 }

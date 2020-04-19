@@ -137,4 +137,24 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 		return null;
 	}
 
+	@Override
+	public List<Customer> searchName(String name) {
+		String first_name = name.split(" ")[0].toLowerCase();
+		String surname = name.split(" ")[1].toLowerCase();
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from customers where lower(first_name) = '"
+						+ first_name + "' and lower(surname) = '" + surname + "';");) {
+			ArrayList<Customer> customers = new ArrayList<>();
+			while (resultSet.next()) {
+				customers.add(customerFromResultSet(resultSet));
+			}
+			return customers;
+		} catch (SQLException e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
 }

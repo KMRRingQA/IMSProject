@@ -144,4 +144,25 @@ public class OrderDaoMysql implements DaoCRUD<Order> {
 		return null;
 	}
 
+	@Override
+	public List<Order> searchName(String name) {
+		String first_name = name.split(" ")[0].toLowerCase();
+		String surname = name.split(" ")[1].toLowerCase();
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(
+						"select * from orders join customers on orders.cust_id=customers.id where lower(customers.first_name) = '"
+								+ first_name + "' and lower(customers.surname) = '" + surname + "';");) {
+			ArrayList<Order> orders = new ArrayList<>();
+			while (resultSet.next()) {
+				orders.add(orderFromResultSet(resultSet));
+			}
+			return orders;
+		} catch (SQLException e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
 }

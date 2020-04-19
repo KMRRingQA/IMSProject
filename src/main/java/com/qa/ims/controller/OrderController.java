@@ -138,4 +138,25 @@ public class OrderController implements CrudController<Order> {
 		return order;
 	}
 
+	@Override
+	public List<Order> searchName() {
+		String name = null;
+		do {
+			try {
+				LOGGER.info(
+						"Please enter the first and last name of the customer whose orders you would like to find.");
+				name = getInput();
+			} catch (Exception e) {
+				LOGGER.info("Please try again.");
+			}
+		} while (!(name.split(" ").length == 2));
+
+		List<Order> orders = orderService.searchName(name);
+
+		for (Order order : orders) {
+			LOGGER.info(order.toString());
+		}
+		return orders;
+	}
+
 }

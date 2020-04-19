@@ -109,7 +109,7 @@ public class OrderLineController {
 		return orderLines;
 	}
 
-	public void betterOrderReader() {
+	public String betterOrderReader() {
 		Long orderId = null;
 		do {
 			try {
@@ -122,6 +122,7 @@ public class OrderLineController {
 		} while (orderId == null || orderId < 0);
 		String order = orderLineService.readOrder(orderId);
 		LOGGER.info(order);
+		return order;
 	}
 
 	public BigDecimal calculateOrderPrice() {

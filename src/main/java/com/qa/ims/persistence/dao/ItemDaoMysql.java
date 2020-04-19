@@ -33,21 +33,7 @@ public class ItemDaoMysql implements DaoCRUD<Item> {
 	 *
 	 * @param customer - takes in a customer object. id will be ignored
 	 */
-//	@Override
-//	public Item create(Item item) {
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement = connection.createStatement();) {
-//			statement.executeUpdate("insert into items(name, price, stock) values('" + item.getName() + "','"
-//					+ item.getPrice() + "','" + item.getStock() + "')");
-//			LOGGER.info(readLatest());
-//		} catch (Exception e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getMessage());
-//		}
-//		return item;
-//	}
-//	
-//	
+
 	@Override
 	public Item create(Item item) {
 		String create = "insert into items(name, price, stock) values(?,?,?)";
@@ -166,24 +152,6 @@ public class ItemDaoMysql implements DaoCRUD<Item> {
 		}
 		return null;
 	}
-
-//	@Override
-//	public List<Item> searchName(String name) {
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement = connection.createStatement();
-//				ResultSet resultSet = statement
-//						.executeQuery("select * from items where lower(name) = '" + name + "';");) {
-//			ArrayList<Item> items = new ArrayList<>();
-//			while (resultSet.next()) {
-//				items.add(itemFromResultSet(resultSet));
-//			}
-//			return items;
-//		} catch (SQLException e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getMessage());
-//		}
-//		return new ArrayList<>();
-//	}
 
 	@Override
 	public List<Item> searchName(String name) {

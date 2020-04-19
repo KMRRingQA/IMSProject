@@ -55,6 +55,8 @@ public class OrderLineDaoMysqlTest {
 		assertEquals(orderLine, orderLineDaoMysql.changeItems(orderLine));
 	}
 
+	String price = "price";
+
 	@Test
 	public void cReadOrder() {
 		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");

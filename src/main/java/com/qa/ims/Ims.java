@@ -125,6 +125,9 @@ public class Ims {
 			orderLineController.changeItems();
 			break;
 		case READORDER:
+			orderLineController.betterOrderReader();
+			break;
+		case READORDER2:
 			orderLineController.readItemsInOrder();
 			break;
 		case CALCULATE:

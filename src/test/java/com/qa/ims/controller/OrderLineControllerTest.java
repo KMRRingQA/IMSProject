@@ -71,7 +71,7 @@ public class OrderLineControllerTest {
 		List<OrderLine> orderLines = new ArrayList<>();
 		orderLines.add(new OrderLine(1L, 2L, 1L));
 		orderLines.add(new OrderLine(1L, 1L, 3L));
-		Mockito.when(orderLineServices.readOrder(1L)).thenReturn(orderLines);
+		Mockito.when(orderLineServices.readOrder2(1L)).thenReturn(orderLines);
 		System.out.println("orderLines:" + orderLines.toString());
 		System.out.println("orderLineControllerOutput: " + orderLineController.readItemsInOrder().toString());
 		assertEquals(orderLines, orderLineController.readItemsInOrder());

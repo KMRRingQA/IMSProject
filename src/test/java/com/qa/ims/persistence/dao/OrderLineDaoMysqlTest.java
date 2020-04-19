@@ -61,7 +61,7 @@ public class OrderLineDaoMysqlTest {
 		List<OrderLine> orderLines = new ArrayList<>();
 		orderLines.add(new OrderLine(1L, 1L, 20L));
 		orderLines.add(new OrderLine(1L, 1L, 10L));
-		assertEquals(orderLines, orderLineDaoMysql.readOrder(1L));
+		assertEquals(orderLines, orderLineDaoMysql.readOrder2(1L));
 	}
 
 	@Test

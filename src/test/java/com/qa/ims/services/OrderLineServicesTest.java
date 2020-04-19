@@ -34,7 +34,7 @@ public class OrderLineServicesTest {
 
 	@Test
 	public void orderLineServicesReadOrder() {
-		orderLineServices.readOrder(1l);
-		Mockito.verify(orderLineDao, Mockito.times(1)).readOrder(1l);
+		orderLineServices.readOrder2(1l);
+		Mockito.verify(orderLineDao, Mockito.times(1)).readOrder2(1l);
 	}
 }

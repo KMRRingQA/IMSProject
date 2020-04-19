@@ -69,7 +69,7 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 		return null;
 	}
 
-	public List<OrderLine> readOrder(Long orderId) {
+	public List<OrderLine> readOrder2(Long orderId) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderLine where order_id = " + orderId);) {
@@ -104,6 +104,37 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 			LOGGER.error(e.getMessage());
 		}
 		return sum;
+	}
+
+	@Override
+	public String readOrder(Long orderId) {
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("select * from orderLine " + "join items on orderLine.item_id=items.id "
+								+ "join orders on orderLine.order_id=orders.order_id "
+								+ "join customers on orders.cust_id=customers.id " + "where orderLine.order_id = "
+								+ orderId);) {
+			resultSet.next();
+			BigDecimal tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
+			BigDecimal product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
+			String format = "Order ID [" + resultSet.getLong("orderLine.order_id") + "]" + "\nplaced: "
+					+ resultSet.getString("orders.date") + "\nby customer: "
+					+ resultSet.getString("customers.first_name") + " " + resultSet.getString("customers.surname")
+					+ "\ntotal price: £" + resultSet.getBigDecimal("orders.total_price") + "\ncontents:" + "\n£"
+					+ product + ":\t " + resultSet.getLong("quantity") + " x " + resultSet.getString("items.name");
+			while (resultSet.next()) {
+				tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
+				product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
+				format += "\n£" + product + ":\t " + resultSet.getLong("quantity") + " x "
+						+ resultSet.getString("items.name");
+			}
+			return format;
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 
 }

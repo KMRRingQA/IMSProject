@@ -25,7 +25,12 @@ public class OrderLineServices implements LineServices<OrderLine> {
 	}
 
 	@Override
-	public List<OrderLine> readOrder(Long orderId) {
+	public List<OrderLine> readOrder2(Long orderId) {
+		return orderLineDao.readOrder2(orderId);
+	}
+
+	@Override
+	public String readOrder(Long orderId) {
 		return orderLineDao.readOrder(orderId);
 	}
 

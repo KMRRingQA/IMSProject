@@ -13,7 +13,8 @@ public enum Action {
 	RETURN("To return to domain selection"), CREATE("To save a new item into the database"),
 	READ("To read all items of stated type"), UPDATE("To change an item already in the database"),
 	DELETE("To remove an item from the database"), ORDERITEMS("To remove or add an item to an existing order"),
-	READORDER("To show all items in an existing order"), CALCULATE("Calculates the current price on an existing order");
+	READORDER("To show all items in an existing order"), CALCULATE("Calculates the current price on an existing order"),
+	READORDER2("returns a better result set, rather than the isntance");
 
 	public static final Logger LOGGER = Logger.getLogger(Action.class);
 

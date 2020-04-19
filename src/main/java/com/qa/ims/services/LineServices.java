@@ -7,8 +7,10 @@ public interface LineServices<T> {
 
 	T changeItems(T t);
 
-	public List<T> readOrder(Long id);
+	public List<T> readOrder2(Long id);
 
 	BigDecimal calculate(Long id);
+
+	public String readOrder(Long id);
 
 }

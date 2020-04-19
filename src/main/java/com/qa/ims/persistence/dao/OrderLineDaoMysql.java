@@ -29,11 +29,11 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 	}
 
 	public OrderLine changeItems(OrderLine orderLine) {
-		String Delete = "delete from orderLine where order_id = ? and item_id = ?";
-		String Create = "insert into orderLine(order_id, item_id, quantity) values( ? , ? , ?)";
+		String delete = "delete from orderLine where order_id = ? and item_id = ?";
+		String create = "insert into orderLine(order_id, item_id, quantity) values( ? , ? , ?)";
 		if (orderLine.getQuantity() == null) {
 			try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-					PreparedStatement pstatement = connection.prepareStatement(Delete)) {
+					PreparedStatement pstatement = connection.prepareStatement(delete)) {
 				pstatement.setLong(1, orderLine.getOrderId());
 				pstatement.setLong(2, orderLine.getItemId());
 				pstatement.executeUpdate();
@@ -43,7 +43,7 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 			}
 		} else {
 			try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-					PreparedStatement pstatement = connection.prepareStatement(Create)) {
+					PreparedStatement pstatement = connection.prepareStatement(create)) {
 				pstatement.setLong(1, orderLine.getOrderId());
 				pstatement.setLong(2, orderLine.getItemId());
 				pstatement.setLong(3, orderLine.getQuantity());
@@ -103,7 +103,8 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 		String calculate = "select quantity,items.price from orderLine join items on orderLine.item_id=items.id where order_id = ? ";
 		String updatePrice = "update orders set total_price = ? where order_id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				PreparedStatement pStatementCalculate = connection.prepareStatement(calculate)) {
+				PreparedStatement pStatementCalculate = connection.prepareStatement(calculate);
+				PreparedStatement pStatementUpdate = connection.prepareStatement(updatePrice)) {
 			pStatementCalculate.setLong(1, orderId);
 			try (ResultSet resultSet = pStatementCalculate.executeQuery()) {
 				while (resultSet.next()) {
@@ -112,7 +113,6 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 					sum = sum.add(product);
 				}
 			}
-			PreparedStatement pStatementUpdate = connection.prepareStatement(updatePrice);
 			pStatementUpdate.setBigDecimal(1, sum);
 			pStatementUpdate.setLong(2, orderId);
 			pStatementUpdate.executeUpdate();

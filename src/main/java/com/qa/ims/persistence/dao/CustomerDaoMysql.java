@@ -98,11 +98,15 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 	}
 
 	public Customer readCustomer(Long id) {
+		String readCustomer = "SELECT * FROM customers where id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers where id = " + id);) {
-			resultSet.next();
-			return customerFromResultSet(resultSet);
+				PreparedStatement pstatement = connection.prepareStatement(readCustomer)) {
+			pstatement.setLong(1, id);
+			pstatement.executeQuery();
+			try (ResultSet resultSet = pstatement.executeQuery();) {
+				resultSet.next();
+				return customerFromResultSet(resultSet);
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

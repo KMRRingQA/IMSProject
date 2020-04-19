@@ -127,12 +127,16 @@ public class OrderDaoMysql implements DaoCRUD<Order> {
 		return null;
 	}
 
-	public Order readOrder(Long orderId) {
+	public Order readOrder(Long id) {
+		String readOrder = "SELECT * FROM orders where order_id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where order_id = " + orderId);) {
-			resultSet.next();
-			return orderFromResultSet(resultSet);
+				PreparedStatement pstatement = connection.prepareStatement(readOrder)) {
+			pstatement.setLong(1, id);
+			pstatement.executeQuery();
+			try (ResultSet resultSet = pstatement.executeQuery();) {
+				resultSet.next();
+				return orderFromResultSet(resultSet);
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

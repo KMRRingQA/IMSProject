@@ -102,11 +102,15 @@ public class ItemDaoMysql implements DaoCRUD<Item> {
 	}
 
 	public Item readItem(Long id) {
+		String readItem = "SELECT * FROM items where id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM items where id = " + id);) {
-			resultSet.next();
-			return itemFromResultSet(resultSet);
+				PreparedStatement pstatement = connection.prepareStatement(readItem)) {
+			pstatement.setLong(1, id);
+			pstatement.executeQuery();
+			try (ResultSet resultSet = pstatement.executeQuery();) {
+				resultSet.next();
+				return itemFromResultSet(resultSet);
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

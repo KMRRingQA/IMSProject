@@ -3,6 +3,7 @@ package com.qa.ims.persistence.dao;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,13 +33,32 @@ public class ItemDaoMysql implements DaoCRUD<Item> {
 	 *
 	 * @param customer - takes in a customer object. id will be ignored
 	 */
+//	@Override
+//	public Item create(Item item) {
+//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+//				Statement statement = connection.createStatement();) {
+//			statement.executeUpdate("insert into items(name, price, stock) values('" + item.getName() + "','"
+//					+ item.getPrice() + "','" + item.getStock() + "')");
+//			LOGGER.info(readLatest());
+//		} catch (Exception e) {
+//			LOGGER.debug(e.getStackTrace());
+//			LOGGER.error(e.getMessage());
+//		}
+//		return item;
+//	}
+//	
+//	
 	@Override
 	public Item create(Item item) {
+		String create = "insert into items(name, price, stock) values(?,?,?)";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("insert into items(name, price, stock) values('" + item.getName() + "','"
-					+ item.getPrice() + "','" + item.getStock() + "')");
+				PreparedStatement pstatement = connection.prepareStatement(create)) {
+			pstatement.setString(1, item.getName());
+			pstatement.setBigDecimal(2, item.getPrice());
+			pstatement.setLong(3, item.getStock());
+			pstatement.executeUpdate();
 			LOGGER.info(readLatest());
+			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -51,11 +71,14 @@ public class ItemDaoMysql implements DaoCRUD<Item> {
 	 *
 	 * @param id - id of the customer
 	 */
+
 	@Override
 	public void delete(long id) {
+		String delete = "delete from items where id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from items where id = " + id);
+				PreparedStatement pstatement = connection.prepareStatement(delete)) {
+			pstatement.setLong(1, id);
+			pstatement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -128,10 +151,14 @@ public class ItemDaoMysql implements DaoCRUD<Item> {
 
 	@Override
 	public Item update(Item item) {
+		String update = "update items set name = ? , price = ? , stock = ? where id = ? ";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update items set name ='" + item.getName() + "', price ='" + item.getPrice()
-					+ "', stock ='" + item.getStock() + "' where id =" + item.getId());
+				PreparedStatement pstatement = connection.prepareStatement(update)) {
+			pstatement.setString(1, item.getName());
+			pstatement.setBigDecimal(2, item.getPrice());
+			pstatement.setLong(3, item.getStock());
+			pstatement.setLong(4, item.getId());
+			pstatement.executeUpdate();
 			return readItem(item.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -140,17 +167,37 @@ public class ItemDaoMysql implements DaoCRUD<Item> {
 		return null;
 	}
 
+//	@Override
+//	public List<Item> searchName(String name) {
+//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+//				Statement statement = connection.createStatement();
+//				ResultSet resultSet = statement
+//						.executeQuery("select * from items where lower(name) = '" + name + "';");) {
+//			ArrayList<Item> items = new ArrayList<>();
+//			while (resultSet.next()) {
+//				items.add(itemFromResultSet(resultSet));
+//			}
+//			return items;
+//		} catch (SQLException e) {
+//			LOGGER.debug(e.getStackTrace());
+//			LOGGER.error(e.getMessage());
+//		}
+//		return new ArrayList<>();
+//	}
+
 	@Override
 	public List<Item> searchName(String name) {
+		String searchName = "select * from items where lower(name) = ? ;";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement
-						.executeQuery("select * from items where lower(name) = '" + name + "';");) {
-			ArrayList<Item> items = new ArrayList<>();
-			while (resultSet.next()) {
-				items.add(itemFromResultSet(resultSet));
+				PreparedStatement pstatement = connection.prepareStatement(searchName)) {
+			pstatement.setString(1, name);
+			try (ResultSet resultSet = pstatement.executeQuery()) {
+				ArrayList<Item> items = new ArrayList<>();
+				while (resultSet.next()) {
+					items.add(itemFromResultSet(resultSet));
+				}
+				return items;
 			}
-			return items;
 		} catch (SQLException e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

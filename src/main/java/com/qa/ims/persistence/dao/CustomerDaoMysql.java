@@ -32,19 +32,6 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 	 *
 	 * @param customer - takes in a customer object. id will be ignored
 	 */
-//	@Override
-//	public Customer create2(Customer customer) {
-//		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-//				Statement statement = connection.createStatement();) {
-//			statement.executeUpdate("insert into customers(first_name, surname) values('" + customer.getFirstName()
-//					+ "','" + customer.getSurname() + "')");
-//			LOGGER.info(readLatest());
-//		} catch (Exception e) {
-//			LOGGER.debug(e.getStackTrace());
-//			LOGGER.error(e.getMessage());
-//		}
-//		return customer;
-//	}
 
 	@Override
 	public Customer create(Customer customer) {

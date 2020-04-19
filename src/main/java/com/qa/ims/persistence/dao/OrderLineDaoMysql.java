@@ -130,8 +130,7 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 				bld.append("\n£" + product + ":\t " + resultSet.getLong("quantity") + " x "
 						+ resultSet.getString("items.name"));
 			}
-			String format = bld.toString();
-			return format;
+			return bld.toString();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

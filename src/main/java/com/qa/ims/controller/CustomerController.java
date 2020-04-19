@@ -114,13 +114,9 @@ public class CustomerController implements CrudController<Customer> {
 	public List<Customer> searchName() {
 		String name = null;
 		do {
-			try {
-				LOGGER.info("Please enter the first and last name of the customer you would like to find");
-				name = getInput();
-			} catch (Exception e) {
-				LOGGER.info("Please try again.");
-			}
-		} while ((name.isEmpty()) || (name.split(" ").length != 2));
+			LOGGER.info("Please enter the first and last name of the customer you would like to find");
+			name = getInput();
+		} while (name.isEmpty() || (name.split(" ").length != 2));
 
 		List<Customer> customers = customerService.searchName(name);
 

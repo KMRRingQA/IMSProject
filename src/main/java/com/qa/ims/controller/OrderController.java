@@ -149,7 +149,7 @@ public class OrderController implements CrudController<Order> {
 			} catch (Exception e) {
 				LOGGER.info("Please try again.");
 			}
-		} while (!(name.split(" ").length == 2));
+		} while (!(name.split(" ").length != 2));
 
 		List<Order> orders = orderService.searchName(name);
 

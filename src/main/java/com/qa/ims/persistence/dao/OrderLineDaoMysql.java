@@ -118,17 +118,19 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 			resultSet.next();
 			BigDecimal tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
 			BigDecimal product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
-			String format = "Order ID [" + resultSet.getLong("orderLine.order_id") + "]" + "\nplaced: "
-					+ resultSet.getString("orders.date") + "\nby customer: "
+
+			StringBuilder bld = new StringBuilder("Order ID [" + resultSet.getLong("orderLine.order_id") + "]"
+					+ "\nplaced: " + resultSet.getString("orders.date") + "\nby customer: "
 					+ resultSet.getString("customers.first_name") + " " + resultSet.getString("customers.surname")
 					+ "\ntotal price: £" + resultSet.getBigDecimal("orders.total_price") + "\ncontents:" + "\n£"
-					+ product + ":\t " + resultSet.getLong("quantity") + " x " + resultSet.getString("items.name");
+					+ product + ":\t " + resultSet.getLong("quantity") + " x " + resultSet.getString("items.name"));
 			while (resultSet.next()) {
 				tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
 				product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
-				format += "\n£" + product + ":\t " + resultSet.getLong("quantity") + " x "
-						+ resultSet.getString("items.name");
+				bld.append("\n£" + product + ":\t " + resultSet.getLong("quantity") + " x "
+						+ resultSet.getString("items.name"));
 			}
+			String format = bld.toString();
 			return format;
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());

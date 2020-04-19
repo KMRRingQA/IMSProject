@@ -83,4 +83,14 @@ public class OrderLineDaoMysqlTest {
 		OrderLine orderLine = new OrderLine(1L, 1L, 10L);
 		assertEquals(orderLine, orderLineDaoMysql.readLatest());
 	}
+
+	@Test
+	public void gDeleteTest() {
+		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
+		Long orderId = 1L;
+		Long itemId = 1L;
+		Long quantity = null;
+		orderLineDaoMysql.changeItems(new OrderLine(orderId, itemId, quantity));
+		assertEquals(new ArrayList<>(), orderLineDaoMysql.readOrder2(1L));
+	}
 }

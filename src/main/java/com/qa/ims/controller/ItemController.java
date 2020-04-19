@@ -126,4 +126,20 @@ public class ItemController implements CrudController<Item> {
 		return item;
 	}
 
+	@Override
+	public List<Item> searchName() {
+		String name = null;
+		do {
+			LOGGER.info("Please enter the title of the Game you would like to find");
+			name = getInput();
+		} while (name.isEmpty());
+
+		List<Item> items = itemService.searchName(name);
+
+		for (Item item : items) {
+			LOGGER.info(item.toString());
+		}
+		return items;
+	}
+
 }

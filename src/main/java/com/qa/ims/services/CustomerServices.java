@@ -8,11 +8,11 @@ import com.qa.ims.persistence.domain.Customer;
 public class CustomerServices implements CrudServices<Customer> {
 
 	private DaoCRUD<Customer> customerDao;
-	
+
 	public CustomerServices(DaoCRUD<Customer> customerDao) {
 		this.customerDao = customerDao;
 	}
-	
+
 	public List<Customer> readAll() {
 		return customerDao.readAll();
 	}
@@ -27,6 +27,11 @@ public class CustomerServices implements CrudServices<Customer> {
 
 	public void delete(Long id) {
 		customerDao.delete(id);
+	}
+
+	@Override
+	public List<Customer> searchName(String name) {
+		return customerDao.searchName(name);
 	}
 
 }

@@ -55,19 +55,42 @@ public class OrderLineDaoMysqlTest {
 		assertEquals(orderLine, orderLineDaoMysql.changeItems(orderLine));
 	}
 
+	String price = "price";
+
 	@Test
 	public void cReadOrder() {
 		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
 		List<OrderLine> orderLines = new ArrayList<>();
 		orderLines.add(new OrderLine(1L, 1L, 20L));
 		orderLines.add(new OrderLine(1L, 1L, 10L));
-		assertEquals(orderLines, orderLineDaoMysql.readOrder(1L));
+		assertEquals("Order ID [1]\n" + "placed: 2020-04-16 00:00:00\n" + "by customer: Luke Conway\n"
+				+ "total price: £74.70\n" + "contents:\n" + "£49.80:	 20 x Skyrim\n" + "£24.90:	 10 x Skyrim",
+				orderLineDaoMysql.readOrder(1L));
 	}
 
 	@Test
-	public void dReadLatestTest() {
+	public void dReadOrder2() {
+		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
+		List<OrderLine> orderLines = new ArrayList<>();
+		orderLines.add(new OrderLine(1L, 1L, 20L));
+		orderLines.add(new OrderLine(1L, 1L, 10L));
+		assertEquals(orderLines, orderLineDaoMysql.readOrder2(1L));
+	}
+
+	@Test
+	public void eReadLatestTest() {
 		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
 		OrderLine orderLine = new OrderLine(1L, 1L, 10L);
 		assertEquals(orderLine, orderLineDaoMysql.readLatest());
+	}
+
+	@Test
+	public void gDeleteTest() {
+		OrderLineDaoMysql orderLineDaoMysql = new OrderLineDaoMysql("root", "root");
+		Long orderId = 1L;
+		Long itemId = 1L;
+		Long quantity = null;
+		orderLineDaoMysql.changeItems(new OrderLine(orderId, itemId, quantity));
+		assertEquals(new ArrayList<>(), orderLineDaoMysql.readOrder2(1L));
 	}
 }

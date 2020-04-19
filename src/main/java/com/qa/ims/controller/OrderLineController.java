@@ -100,11 +100,29 @@ public class OrderLineController {
 				LOGGER.info(integerInput);
 			}
 		} while (orderId == null || orderId < 0);
-		List<OrderLine> orderLines = orderLineService.readOrder(orderId);
+
+		List<OrderLine> orderLines = orderLineService.readOrder2(orderId);
+
 		for (OrderLine orderLine : orderLines) {
 			LOGGER.info(orderLine.toString());
 		}
 		return orderLines;
+	}
+
+	public String betterOrderReader() {
+		Long orderId = null;
+		do {
+			try {
+				LOGGER.info("Please enter the id of the order you would like read");
+				String orderIdString = getInput();
+				orderId = Long.valueOf(orderIdString);
+			} catch (NumberFormatException nfe) {
+				LOGGER.info(integerInput);
+			}
+		} while (orderId == null || orderId < 0);
+		String order = orderLineService.readOrder(orderId);
+		LOGGER.info(order);
+		return order;
 	}
 
 	public BigDecimal calculateOrderPrice() {

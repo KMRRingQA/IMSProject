@@ -61,6 +61,15 @@ public class ItemControllerTest {
 		assertEquals(savedItem, itemController.create());
 	}
 
+	@Test
+	public void searchNameTest() {
+		Mockito.doReturn("Skyrim").when(itemController).getInput();
+		List<Item> items = new ArrayList<>();
+		items.add(new Item(2L, "Skyrim", BigDecimal.valueOf(2.49), 100L));
+		Mockito.when(itemServices.searchName("Skyrim")).thenReturn(items);
+		assertEquals(items, itemController.searchName());
+	}
+
 	/**
 	 * 
 	 */

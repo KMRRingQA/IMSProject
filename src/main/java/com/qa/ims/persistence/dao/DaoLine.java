@@ -9,5 +9,7 @@ public interface DaoLine<T> {
 
 	T changeItems(T t);
 
-	List<T> readOrder(Long id);
+	List<T> readOrder2(Long id);
+
+	String readOrder(Long orderId);
 }

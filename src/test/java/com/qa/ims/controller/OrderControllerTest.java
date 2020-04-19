@@ -78,6 +78,15 @@ public class OrderControllerTest {
 		assertEquals(orderController.update(), order);
 	}
 
+	@Test
+	public void searchNameTest() {
+		Mockito.doReturn("Varvara Kot").when(orderController).getInput();
+		List<Order> orders = new ArrayList<>();
+		orders.add(new Order(2L, 2L, "2020-4-1", BigDecimal.valueOf(12.47)));
+		Mockito.when(orderServices.searchName("Varvara Kot")).thenReturn(orders);
+		assertEquals(orders, orderController.searchName());
+	}
+
 	/**
 	 * Delete doesn't return anything, so we can just verify that it calls the
 	 * delete method

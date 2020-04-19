@@ -12,4 +12,6 @@ public interface CrudServices<T> {
 
 	T update(T t);
 
+	List<T> searchName(String name);
+
 }

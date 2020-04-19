@@ -46,6 +46,15 @@ public class CustomerControllerTest {
 	}
 
 	@Test
+	public void searchNameTest() {
+		Mockito.doReturn("Hello World").when(customerController).getInput();
+		List<Customer> customers = new ArrayList<>();
+		customers.add(new Customer(1L, "Hello", "World"));
+		Mockito.when(customerServices.searchName("Hello World")).thenReturn(customers);
+		assertEquals(customers, customerController.searchName());
+	}
+
+	@Test
 	public void createTest() {
 		String firstName = "Chris";
 		String surname = "Perrins";

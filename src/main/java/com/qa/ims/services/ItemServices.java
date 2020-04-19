@@ -33,4 +33,9 @@ public class ItemServices implements CrudServices<Item> {
 		return itemDao.update(item);
 	}
 
+	@Override
+	public List<Item> searchName(String name) {
+		return itemDao.searchName(name);
+	}
+
 }

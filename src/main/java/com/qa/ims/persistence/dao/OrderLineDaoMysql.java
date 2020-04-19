@@ -3,6 +3,7 @@ package com.qa.ims.persistence.dao;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,27 +29,36 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 	}
 
 	public OrderLine changeItems(OrderLine orderLine) {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-
-			if (orderLine.getQuantity() == null) {
-				statement.executeUpdate("delete from orderLine where order_id = " + orderLine.getOrderId()
-						+ " and item_id = " + orderLine.getItemId());
-			} else {
-				statement.executeUpdate(
-						"insert into orderLine(order_id, item_id, quantity) values('" + orderLine.getOrderId() + "','"
-								+ orderLine.getItemId() + "','" + orderLine.getQuantity() + "')");
-				LOGGER.info(readLatest());
+		String delete = "delete from orderLine where order_id = ? and item_id = ?";
+		String create = "insert into orderLine(order_id, item_id, quantity) values( ? , ? , ?)";
+		if (orderLine.getQuantity() == null) {
+			try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+					PreparedStatement pstatement = connection.prepareStatement(delete)) {
+				pstatement.setLong(1, orderLine.getOrderId());
+				pstatement.setLong(2, orderLine.getItemId());
+				pstatement.executeUpdate();
+			} catch (Exception e) {
+				LOGGER.debug(e.getStackTrace());
+				LOGGER.error(e.getMessage());
 			}
-			calculate(orderLine.getOrderId());
-		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+		} else {
+			try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+					PreparedStatement pstatement = connection.prepareStatement(create)) {
+				pstatement.setLong(1, orderLine.getOrderId());
+				pstatement.setLong(2, orderLine.getItemId());
+				pstatement.setLong(3, orderLine.getQuantity());
+				pstatement.executeUpdate();
+			} catch (Exception e) {
+				LOGGER.debug(e.getStackTrace());
+				LOGGER.error(e.getMessage());
+			}
+			LOGGER.info(readLatest());
 		}
+		calculate(orderLine.getOrderId());
 		return orderLine;
 	}
 
-	OrderLine orderListFromResultSet(ResultSet resultSet) throws SQLException {
+	OrderLine orderLineFromResultSet(ResultSet resultSet) throws SQLException {
 		Long orderId = resultSet.getLong("order_id");
 		Long itemId = resultSet.getLong("item_id");
 		Long quantity = resultSet.getLong("quantity");
@@ -61,7 +71,7 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 				ResultSet resultSet = statement
 						.executeQuery("SELECT * FROM orderLine ORDER BY orderline_id DESC LIMIT 1");) {
 			resultSet.next();
-			return orderListFromResultSet(resultSet);
+			return orderLineFromResultSet(resultSet);
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -69,15 +79,18 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 		return null;
 	}
 
-	public List<OrderLine> readOrder(Long orderId) {
+	public List<OrderLine> readOrder2(Long orderId) {
+		String readOrder = "select * from orderLine where order_id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderLine where order_id = " + orderId);) {
-			ArrayList<OrderLine> orderLines = new ArrayList<>();
-			while (resultSet.next()) {
-				orderLines.add(orderListFromResultSet(resultSet));
+				PreparedStatement pstatement = connection.prepareStatement(readOrder)) {
+			pstatement.setLong(1, orderId);
+			try (ResultSet resultSet = pstatement.executeQuery()) {
+				ArrayList<OrderLine> orderLines = new ArrayList<>();
+				while (resultSet.next()) {
+					orderLines.add(orderLineFromResultSet(resultSet));
+				}
+				return orderLines;
 			}
-			return orderLines;
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -87,23 +100,60 @@ public class OrderLineDaoMysql implements DaoLine<OrderLine> {
 
 	public BigDecimal calculate(Long orderId) {
 		BigDecimal sum = BigDecimal.valueOf(0.00);
-
+		String calculate = "select quantity,items.price from orderLine join items on orderLine.item_id=items.id where order_id = ? ";
+		String updatePrice = "update orders set total_price = ? where order_id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery(
-						"select quantity,items.price from orderLine join items on orderLine.item_id=items.id where order_id = "
-								+ orderId + ";");) {
-			while (resultSet.next()) {
-				BigDecimal tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
-				BigDecimal product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
-				sum = sum.add(product);
+				PreparedStatement pStatementCalculate = connection.prepareStatement(calculate);
+				PreparedStatement pStatementUpdate = connection.prepareStatement(updatePrice)) {
+			pStatementCalculate.setLong(1, orderId);
+			try (ResultSet resultSet = pStatementCalculate.executeQuery()) {
+				while (resultSet.next()) {
+					BigDecimal tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
+					BigDecimal product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
+					sum = sum.add(product);
+				}
 			}
-			statement.executeUpdate("update orders set total_price = '" + sum + "' where order_id =" + orderId);
+			pStatementUpdate.setBigDecimal(1, sum);
+			pStatementUpdate.setLong(2, orderId);
+			pStatementUpdate.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
 		return sum;
+	}
+
+	@Override
+	public String readOrder(Long orderId) {
+		String readOrder = "select * from orderLine join items on orderLine.item_id=items.id "
+				+ "join orders on orderLine.order_id=orders.order_id "
+				+ "join customers on orders.cust_id=customers.id where orderLine.order_id = ?";
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				PreparedStatement pstatement = connection.prepareStatement(readOrder)) {
+			pstatement.setLong(1, orderId);
+			try (ResultSet resultSet = pstatement.executeQuery()) {
+				resultSet.next();
+				BigDecimal tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
+				BigDecimal product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
+
+				StringBuilder bld = new StringBuilder("Order ID [" + resultSet.getLong("orderLine.order_id") + "]"
+						+ "\nplaced: " + resultSet.getString("orders.date") + "\nby customer: "
+						+ resultSet.getString("customers.first_name") + " " + resultSet.getString("customers.surname")
+						+ "\ntotal price: £" + resultSet.getBigDecimal("orders.total_price") + "\ncontents:" + "\n£"
+						+ product + ":\t " + resultSet.getLong("quantity") + " x " + resultSet.getString("items.name"));
+				while (resultSet.next()) {
+					tempQuantity = BigDecimal.valueOf(resultSet.getLong("quantity"));
+					product = tempQuantity.multiply(resultSet.getBigDecimal("price"));
+					bld.append("\n£" + product + ":\t " + resultSet.getLong("quantity") + " x "
+							+ resultSet.getString("items.name"));
+				}
+				return bld.toString();
+			}
+		} catch (Exception e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 
 }

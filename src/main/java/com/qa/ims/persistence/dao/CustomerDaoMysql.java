@@ -2,6 +2,7 @@ package com.qa.ims.persistence.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,13 +32,17 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 	 *
 	 * @param customer - takes in a customer object. id will be ignored
 	 */
+
 	@Override
 	public Customer create(Customer customer) {
+		String create = "insert into customers(first_name, surname) values(? , ?)";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("insert into customers(first_name, surname) values('" + customer.getFirstName()
-					+ "','" + customer.getSurname() + "')");
+				PreparedStatement pstatement = connection.prepareStatement(create)) {
+			pstatement.setString(1, customer.getFirstName());
+			pstatement.setString(2, customer.getSurname());
+			pstatement.executeUpdate();
 			LOGGER.info(readLatest());
+			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -59,9 +64,11 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 	 */
 	@Override
 	public void delete(long id) {
+		String delete = "delete from customers where id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from customers where id = " + id);
+				PreparedStatement pstatement = connection.prepareStatement(delete)) {
+			pstatement.setLong(1, id);
+			pstatement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -91,11 +98,15 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 	}
 
 	public Customer readCustomer(Long id) {
+		String readCustomer = "SELECT * FROM customers where id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers where id = " + id);) {
-			resultSet.next();
-			return customerFromResultSet(resultSet);
+				PreparedStatement pstatement = connection.prepareStatement(readCustomer)) {
+			pstatement.setLong(1, id);
+			pstatement.executeQuery();
+			try (ResultSet resultSet = pstatement.executeQuery();) {
+				resultSet.next();
+				return customerFromResultSet(resultSet);
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -125,16 +136,42 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 	 */
 	@Override
 	public Customer update(Customer customer) {
+		String update = "update customers set first_name = ? , surname = ?  where id =?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update customers set first_name ='" + customer.getFirstName() + "', surname ='"
-					+ customer.getSurname() + "' where id =" + customer.getId());
+				PreparedStatement pstatement = connection.prepareStatement(update)) {
+			pstatement.setString(1, customer.getFirstName());
+			pstatement.setString(2, customer.getSurname());
+			pstatement.setLong(3, customer.getId());
+			pstatement.executeUpdate();
 			return readCustomer(customer.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
 		return null;
+	}
+
+	@Override
+	public List<Customer> searchName(String name) {
+		String searchName = "select * from customers where lower(first_name) = ? and lower(surname) = ?;";
+		String firstName = name.split(" ")[0].toLowerCase();
+		String surname = name.split(" ")[1].toLowerCase();
+		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+				PreparedStatement pstatement = connection.prepareStatement(searchName)) {
+			pstatement.setString(1, firstName);
+			pstatement.setString(2, surname);
+			try (ResultSet resultSet = pstatement.executeQuery()) {
+				ArrayList<Customer> customers = new ArrayList<>();
+				while (resultSet.next()) {
+					customers.add(customerFromResultSet(resultSet));
+				}
+				return customers;
+			}
+		} catch (SQLException e) {
+			LOGGER.debug(e.getStackTrace());
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
 	}
 
 }

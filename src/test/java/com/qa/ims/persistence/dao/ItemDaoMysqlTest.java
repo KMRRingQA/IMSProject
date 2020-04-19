@@ -52,7 +52,7 @@ public class ItemDaoMysqlTest {
 		String name = "Minecraft";
 		BigDecimal price = BigDecimal.valueOf(14.99);
 		Long stock = 1000L;
-		Item item = new Item(name, price, stock);
+		Item item = new Item(2L, name, price, stock);
 		assertEquals(item, itemDaoMysql.create(item));
 	}
 
@@ -106,6 +106,16 @@ public class ItemDaoMysqlTest {
 		List<Item> items = new ArrayList<>();
 		items.add(new Item(2L, "Minecraft", BigDecimal.valueOf(14.99), 1000L));
 		assertEquals(items, itemDaoMysql.readAll());
+	}
+
+	@Test
+	public void hSearchTest() {
+		ItemDaoMysql itemDaoMysql = new ItemDaoMysql("root", "root");
+		String name = "Minecraft";
+		itemDaoMysql.searchName(name);
+		List<Item> items = new ArrayList<>();
+		items.add(new Item(2L, "Minecraft", BigDecimal.valueOf(14.99), 1000L));
+		assertEquals(items, itemDaoMysql.searchName("Minecraft"));
 	}
 
 }

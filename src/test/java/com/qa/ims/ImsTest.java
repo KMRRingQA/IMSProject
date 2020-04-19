@@ -27,7 +27,6 @@ public class ImsTest {
 	public void bImsSystem() {
 		Mockito.doReturn("root", "root", "customer", "read", "item", "read", "order", "read", "customer", "return",
 				"stop").when(ims).getInput();
-		ims.imsSystem();
 		assertEquals("Program finished succesfully", ims.imsSystem());
 	}
 

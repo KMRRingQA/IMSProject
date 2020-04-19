@@ -169,12 +169,13 @@ public class CustomerDaoMysql implements DaoCRUD<Customer> {
 				PreparedStatement pstatement = connection.prepareStatement(searchName)) {
 			pstatement.setString(1, firstName);
 			pstatement.setString(2, surname);
-			ResultSet resultSet = pstatement.executeQuery();
-			ArrayList<Customer> customers = new ArrayList<>();
-			while (resultSet.next()) {
-				customers.add(customerFromResultSet(resultSet));
+			try (ResultSet resultSet = pstatement.executeQuery()) {
+				ArrayList<Customer> customers = new ArrayList<>();
+				while (resultSet.next()) {
+					customers.add(customerFromResultSet(resultSet));
+				}
+				return customers;
 			}
-			return customers;
 		} catch (SQLException e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

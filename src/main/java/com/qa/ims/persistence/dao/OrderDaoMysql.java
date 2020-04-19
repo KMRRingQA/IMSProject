@@ -3,6 +3,7 @@ package com.qa.ims.persistence.dao;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,20 +35,33 @@ public class OrderDaoMysql implements DaoCRUD<Order> {
 	 */
 	@Override
 	public Order create(Order order) {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			if (order.getDate().isEmpty()) {
-				statement.executeUpdate("insert into orders(cust_id, total_price) values('" + order.getCustId() + "','"
-						+ order.getTotalPrice() + "')");
-			} else {
-				statement.executeUpdate("insert into orders(cust_id, date, total_price) values('" + order.getCustId()
-						+ "','" + order.getDate() + "','" + order.getTotalPrice() + "')");
+		String createWithoutDate = "insert into orders(cust_id, total_price) values(? , ?)";
+		String createWithDate = "insert into orders(cust_id,date, total_price) values(? , ?, ?)";
+
+		if (order.getDate().isEmpty()) {
+			try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+					PreparedStatement pstatement = connection.prepareStatement(createWithoutDate)) {
+				pstatement.setLong(1, order.getCustId());
+				pstatement.setBigDecimal(2, order.getTotalPrice());
+				pstatement.executeUpdate();
+			} catch (Exception e) {
+				LOGGER.debug(e.getStackTrace());
+				LOGGER.error(e.getMessage());
 			}
-			LOGGER.info(readLatest());
-		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+		} else {
+			try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
+					PreparedStatement pstatement = connection.prepareStatement(createWithDate)) {
+				pstatement.setLong(1, order.getCustId());
+				pstatement.setString(2, order.getDate());
+				pstatement.setBigDecimal(3, order.getTotalPrice());
+				pstatement.executeUpdate();
+			} catch (Exception e) {
+				LOGGER.debug(e.getStackTrace());
+				LOGGER.error(e.getMessage());
+			}
 		}
+		LOGGER.info(readLatest());
+
 		return order;
 	}
 
@@ -56,11 +70,14 @@ public class OrderDaoMysql implements DaoCRUD<Order> {
 	 *
 	 * @param id - id of the customer
 	 */
+
 	@Override
-	public void delete(long orderId) {
+	public void delete(long id) {
+		String delete = "delete from orders where order_id = ?";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from orders where order_id = " + orderId);
+				PreparedStatement pstatement = connection.prepareStatement(delete)) {
+			pstatement.setLong(1, id);
+			pstatement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -130,12 +147,17 @@ public class OrderDaoMysql implements DaoCRUD<Order> {
 	 *                 update that customer in the database
 	 * @return
 	 */
+
 	@Override
 	public Order update(Order order) {
+		String update = "update orders set cust_id = ? , date = ? , total_price = ? where order_id = ?;";
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update orders set cust_id ='" + order.getCustId() + "', date ='" + order.getDate()
-					+ "', total_price ='" + order.getTotalPrice() + "' where order_id =" + order.getOrderId());
+				PreparedStatement pstatement = connection.prepareStatement(update)) {
+			pstatement.setLong(1, order.getCustId());
+			pstatement.setString(2, order.getDate());
+			pstatement.setBigDecimal(3, order.getTotalPrice());
+			pstatement.setLong(4, order.getOrderId());
+			pstatement.executeUpdate();
 			return readOrder(order.getOrderId());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -146,18 +168,20 @@ public class OrderDaoMysql implements DaoCRUD<Order> {
 
 	@Override
 	public List<Order> searchName(String name) {
+		String searchName = "select * from orders join customers on orders.cust_id=customers.id where lower(customers.first_name) = ? and lower(customers.surname) = ?;";
 		String firstName = name.split(" ")[0].toLowerCase();
 		String surname = name.split(" ")[1].toLowerCase();
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery(
-						"select * from orders join customers on orders.cust_id=customers.id where lower(customers.first_name) = '"
-								+ firstName + "' and lower(customers.surname) = '" + surname + "';");) {
-			ArrayList<Order> orders = new ArrayList<>();
-			while (resultSet.next()) {
-				orders.add(orderFromResultSet(resultSet));
+				PreparedStatement pstatement = connection.prepareStatement(searchName)) {
+			pstatement.setString(1, firstName);
+			pstatement.setString(2, surname);
+			try (ResultSet resultSet = pstatement.executeQuery()) {
+				ArrayList<Order> orders = new ArrayList<>();
+				while (resultSet.next()) {
+					orders.add(orderFromResultSet(resultSet));
+				}
+				return orders;
 			}
-			return orders;
 		} catch (SQLException e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());

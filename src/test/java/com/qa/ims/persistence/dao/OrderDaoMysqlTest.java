@@ -103,25 +103,39 @@ public class OrderDaoMysqlTest {
 	 * Delete doesn't return anything, but we can readall afterwards to make sure
 	 * that it has been deleted.
 	 */
-	@Test
-	public void gDeleteTest() {
-		OrderDaoMysql orderDaoMysql = new OrderDaoMysql("root", "root");
-		String id = "1";
-		orderDaoMysql.delete(Long.parseLong(id));
-		List<Order> orders = new ArrayList<>();
-		orders.add(new Order(2L, 1L, "2020-04-18 00:00:00",
-				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP)));
-		assertEquals(orders, orderDaoMysql.readAll());
-	}
 
 	@Test
-	public void hCreateWithoutDateTest() {
+	public void gCreateWithoutDateTest() {
 		OrderDaoMysql orderDaoMysql = new OrderDaoMysql("root", "root");
 		Long custId = 1L;
 		String date = "";
 		BigDecimal totalPrice = BigDecimal.valueOf(0.0);
 		Order order = new Order(custId, date, totalPrice);
 		assertEquals(order, orderDaoMysql.create(order));
+	}
+
+	@Test
+	public void hDeleteTest() {
+		OrderDaoMysql orderDaoMysql = new OrderDaoMysql("root", "root");
+		String id = "3";
+		orderDaoMysql.delete(Long.parseLong(id));
+		List<Order> orders = new ArrayList<>();
+		orders.add(new Order(1L, 1L, "2020-04-17 00:00:00",
+				BigDecimal.valueOf(1.01).setScale(2, BigDecimal.ROUND_HALF_UP)));
+		orders.add(new Order(2L, 1L, "2020-04-18 00:00:00",
+				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP)));
+		assertEquals(orders, orderDaoMysql.readAll());
+	}
+
+	@Test
+	public void iSearchTest() {
+		OrderDaoMysql orderDaoMysql = new OrderDaoMysql("root", "root");
+		List<Order> orders = new ArrayList<>();
+		orders.add(new Order(1L, 1L, "2020-04-17 00:00:00",
+				BigDecimal.valueOf(1.01).setScale(2, BigDecimal.ROUND_HALF_UP)));
+		orders.add(new Order(2L, 1L, "2020-04-18 00:00:00",
+				BigDecimal.valueOf(0.00).setScale(2, BigDecimal.ROUND_HALF_UP)));
+		assertEquals(orders, orderDaoMysql.searchName("Luke Conway"));
 	}
 
 }

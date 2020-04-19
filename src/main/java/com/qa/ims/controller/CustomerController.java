@@ -120,7 +120,7 @@ public class CustomerController implements CrudController<Customer> {
 			} catch (Exception e) {
 				LOGGER.info("Please try again.");
 			}
-		} while (!(name.split(" ").length == 2));
+		} while ((name.isEmpty()) || !(name.split(" ").length == 2));
 
 		List<Customer> customers = customerService.searchName(name);
 

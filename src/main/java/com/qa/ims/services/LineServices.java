@@ -3,7 +3,7 @@ package com.qa.ims.services;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface OLServices<T> {
+public interface LineServices<T> {
 
 	T changeItems(T t);
 

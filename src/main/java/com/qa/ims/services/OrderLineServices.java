@@ -6,7 +6,7 @@ import java.util.List;
 import com.qa.ims.persistence.dao.DaoOrderLine;
 import com.qa.ims.persistence.domain.OrderLine;
 
-public class OrderLineServices implements OLServices<OrderLine> {
+public class OrderLineServices implements LineServices<OrderLine> {
 
 	private DaoOrderLine<OrderLine> orderLineDao;
 

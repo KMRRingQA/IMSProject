@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.qa.ims.Ims;
 import com.qa.ims.persistence.domain.Order;
 
 public class OrderDaoMysql implements DaoCRUD<Order> {
@@ -23,7 +24,7 @@ public class OrderDaoMysql implements DaoCRUD<Order> {
 	private String password;
 
 	public OrderDaoMysql(String username, String password) {
-		this.jdbcConnectionUrl = "jdbc:mysql://34.67.113.137:3306/ims";
+		this.jdbcConnectionUrl = Ims.getJdbcConnectionUrl();
 		this.username = username;
 		this.password = password;
 	}

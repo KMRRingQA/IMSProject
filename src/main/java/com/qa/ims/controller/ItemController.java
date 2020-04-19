@@ -130,12 +130,8 @@ public class ItemController implements CrudController<Item> {
 	public List<Item> searchName() {
 		String name = null;
 		do {
-			try {
-				LOGGER.info("Please enter the title of the Game you would like to find");
-				name = getInput();
-			} catch (Exception e) {
-				LOGGER.info("Please try again.");
-			}
+			LOGGER.info("Please enter the title of the Game you would like to find");
+			name = getInput();
 		} while (name.isEmpty());
 
 		List<Item> items = itemService.searchName(name);

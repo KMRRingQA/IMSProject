@@ -50,7 +50,7 @@ public class CustomerDaoMysqlTest {
 		CustomerDaoMysql customerDaoMysql = new CustomerDaoMysql("root", "root");
 		String firstName = "Korbinian";
 		String surname = "Ring";
-		Customer customer = new Customer(firstName, surname);
+		Customer customer = new Customer(2L, firstName, surname);
 		assertEquals(customer, customerDaoMysql.create(customer));
 	}
 
@@ -91,8 +91,7 @@ public class CustomerDaoMysqlTest {
 	}
 
 	/**
-	 * Delete doesn't return anything, so we can just verify that it calls the
-	 * delete method
+	 * makes sure that after you delete, the entry is no longer in the database.
 	 */
 	@Test
 	public void gDeleteTest() {
@@ -102,6 +101,16 @@ public class CustomerDaoMysqlTest {
 		List<Customer> customers = new ArrayList<>();
 		customers.add(new Customer(2L, "Korbinian", "Ring"));
 		assertEquals(customers, customerDaoMysql.readAll());
+	}
+
+	@Test
+	public void fSearchTest() {
+		CustomerDaoMysql customerDaoMysql = new CustomerDaoMysql("root", "root");
+		String name = "Korbinian Ring";
+		customerDaoMysql.searchName(name);
+		List<Customer> customers = new ArrayList<>();
+		customers.add(new Customer(2L, "Korbinian", "Ring"));
+		assertEquals(customers, customerDaoMysql.searchName("Korbinian Ring"));
 	}
 
 }

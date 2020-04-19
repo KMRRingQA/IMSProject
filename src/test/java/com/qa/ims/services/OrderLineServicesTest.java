@@ -7,14 +7,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.qa.ims.persistence.dao.DaoOrderLine;
+import com.qa.ims.persistence.dao.DaoLine;
 import com.qa.ims.persistence.domain.OrderLine;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrderLineServicesTest {
 
 	@Mock
-	private DaoOrderLine<OrderLine> orderLineDao;
+	private DaoLine<OrderLine> orderLineDao;
 
 	@InjectMocks
 	private OrderLineServices orderLineServices;

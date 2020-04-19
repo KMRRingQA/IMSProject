@@ -1,5 +1,7 @@
 package com.qa.ims;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,9 +25,10 @@ public class ImsTest {
 
 	@Test
 	public void bImsSystem() {
-		Mockito.doReturn("root", "root", "customer", "return", "item", "return", "order", "return", "stop").when(ims)
-				.getInput();
+		Mockito.doReturn("root", "root", "customer", "read", "item", "read", "order", "read", "customer", "return",
+				"stop").when(ims).getInput();
 		ims.imsSystem();
+		assertEquals("Program finished succesfully", ims.imsSystem());
 	}
 
 }

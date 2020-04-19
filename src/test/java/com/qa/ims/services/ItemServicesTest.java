@@ -9,14 +9,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.qa.ims.persistence.dao.Dao;
+import com.qa.ims.persistence.dao.DaoCRUD;
 import com.qa.ims.persistence.domain.Item;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ItemServicesTest {
 
 	@Mock
-	private Dao<Item> itemDao;
+	private DaoCRUD<Item> itemDao;
 
 	@InjectMocks
 	private ItemServices itemServices;

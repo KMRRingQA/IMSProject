@@ -2,6 +2,8 @@ package com.qa.ims.persistence.domain;
 
 import org.apache.log4j.Logger;
 
+import com.qa.ims.utils.Utils;
+
 public enum Domain {
 
 	CUSTOMER("Information about customers"), ITEM("Individual Items"), ORDER("Purchases of items"),
@@ -18,10 +20,15 @@ public enum Domain {
 
 			} catch (IllegalArgumentException e) {
 				LOGGER.error("Invalid selection please try again");
+				input = getInput();
 			}
 		}
 
 		return domain;
+	}
+
+	static String getInput() {
+		return Utils.getInput();
 	}
 
 	public static void printDomains() {

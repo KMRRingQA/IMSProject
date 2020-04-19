@@ -2,6 +2,8 @@ package com.qa.ims.controller;
 
 import org.apache.log4j.Logger;
 
+import com.qa.ims.utils.Utils;
+
 /**
  * Action is a collection of commands which are used to determine the type of
  * function to apply to an entity.
@@ -29,9 +31,14 @@ public enum Action {
 				break;
 			} catch (IllegalArgumentException e) {
 				LOGGER.error("Invalid selection please try again");
+				input = getInput();
 			}
 		}
 		return action;
+	}
+
+	static String getInput() {
+		return Utils.getInput();
 	}
 
 	/**

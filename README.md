@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-Coverage: 83.1% SonarQube, 
-=======
-Coverage:  93.5% JUnit coverage.
->>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
+Coverage: 83.1% SonarQube, 93.5% JUnit 
 
 # Inventory Management System - QA Consultancy Individual Project
 
@@ -20,12 +16,16 @@ A CI Server was set up, managed by Jenkins, to analyse code pushed to GitHub usi
 
 ```
 mvn clean install
-<<<<<<< HEAD
 ```
 inside of the project folder, followed by
 ```
 java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
 ```
+5) Development environmentshould be separate from actual database, having its own MySQL instance, since
+	1) the database is reset every time tests are run
+	2) MySQL login details are hard coded into the test files.
+6) you should delete/modify the Tests in order to prevent this.
+	
 ### Prerequisites
 
 In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.

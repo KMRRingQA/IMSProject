@@ -104,6 +104,8 @@ Testing will drop the database and all information containing it! Be aware of th
 * [Trello](https://maven.apache.org/) - planning, kanban
 * [MySQL](https://maven.apache.org/) - database language
 * [GCP](https://maven.apache.org/) - database host
+* [JUnit](https://maven.apache.org/) - Testing (see pom.xml)
+* [Mockito](https://maven.apache.org/) - Testing (see pom.xml)
 
 
 ## Authors

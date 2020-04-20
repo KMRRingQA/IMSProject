@@ -1,19 +1,30 @@
-Coverage: 34%
-# Project Title
+Coverage: 83.1% SonarQube, 
 
-One Paragraph of project description goes here
+# Inventory Management System - QA Consultancy Individual Project
+
+This project links a Google Cloud Platform MySQL instance to a Java exetuble via JDBC, from which an inventory of items may be managed.
+The project is built on Maven using the Eclipse IDE, using JUnit & Mockito for testing purposes. 
+Version control was done using Git, with GitHub as host. 
+A CI Server was set up, managed by Jenkins, to analyse code pushed to GitHub using SonarQube. The artifacts were stored on Nexus.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+1) Clone the repository to the desired client
+2) Open the project as a Maven project
+3) Link it to your MySQL instance by replacing the hard-coded IP-addresses
+4) You may now run it from your IDE as a Maven project, or use 
 
+```
+mvn clean install
+```
+inside of the project folder, followed by
+```
+java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
+```
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.
+Additionaly, a MySQL instance must be set up (either locally or on the cloud), and the IP addresses, which are hardcoded in the IMS and DAO classes, must be changed to refer to said MySQL instance.
 
 ### Installing
 
@@ -32,6 +43,8 @@ until finished
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
+
+
 
 ## Running the tests
 
@@ -75,16 +88,14 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Korbinian Ring** - *all but first commit * - [KMRRingQA](https://github.com/KMRRingQA)
 
 ## License
 
 This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
 
-*For help in [Choosing a license](https://choosealicense.com/)*
-
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Caroline Strasenburgh, helping me out with documentation
+
 # IMSProject

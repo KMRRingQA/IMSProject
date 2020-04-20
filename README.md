@@ -30,7 +30,6 @@ java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
 
 In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.
 Additionaly, a MySQL instance must be set up (either locally or on the cloud), and the IP addresses, which are hardcoded in the IMS and DAO classes, must be changed to refer to said MySQL instance.
-=======
 ```
 inside of the project folder, followed by
 ```
@@ -38,12 +37,8 @@ java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
 ```
 in order to run it from your cmd window.
 It will ask you for a username and password - these are the details you have set in your MySQL databse.
->>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
 
 ### Prerequisites
-
-In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.
-Additionaly, a MySQL instance must be set up (either locally or on the cloud), and the IP addresses, which are hardcoded in the IMS and DAO classes, must be changed to refer to said MySQL instance.
 
 ### Installing
 
@@ -70,23 +65,7 @@ exit, then open again
 ```
 curl https://gist.githubusercontent.com/christophperrins/fa5155359f8808a83fee7e34abb21769/raw/10f8cee4968fe76510b9e6a04cb6c679be92b466/installSonaqubeWithDocker.sh | sh
 ```
-<<<<<<< HEAD
-
-End with an example of getting some data out of the system or using it for a little demo
-
-
-
-## Running the tests
-
-Explain how to run the automated tests for this system. Break down into which tests and what they do
-
-### Unit Tests 
-
-Explain what these tests test, why and how to run them
-
-=======
 3) Whitelist your IP address and Port in the VM's network settings.
-
 4) open jenkins (localhost)
 5) log in with the password provided int he jenkins settings folder. You may want to change this later.
 6) create a new freestyle project
@@ -95,7 +74,6 @@ Explain what these tests test, why and how to run them
 9) in the scm section, check the poll scm box
 10) switch on options to abort build when stuck
 11) build your program with Maven by adding following batch commands:
->>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
 ```
 mvn clean package test
 ```
@@ -140,11 +118,4 @@ We use [SemVer](http://semver.org/) for versioning.
 
 This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
 
-<<<<<<< HEAD
-## Acknowledgments
-
-* Caroline Strasenburgh, helping me out with documentation
-
-=======
->>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
 # IMSProject

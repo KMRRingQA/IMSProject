@@ -95,10 +95,16 @@ Testing will drop the database and all information containing it! Be aware of th
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
+* [Jenkins](https://maven.apache.org/) - CI Pipeline scripter
+* [Eclipse](https://maven.apache.org/) - IDE
+* [SonarQube](https://maven.apache.org/) - static analysis
+* [Nexus](https://maven.apache.org/) - artifact repository
+* [Git](https://maven.apache.org/) - version control system
+* [GitHub](https://maven.apache.org/) - host of version control system
+* [Trello](https://maven.apache.org/) - planning, kanban
+* [MySQL](https://maven.apache.org/) - database language
+* [GCP](https://maven.apache.org/) - database host
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 

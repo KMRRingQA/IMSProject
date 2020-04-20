@@ -7,7 +7,7 @@ The project is built on Maven using the Eclipse IDE, using JUnit & Mockito for t
 Version control was done using Git, with GitHub as host. 
 A CI Server was set up, managed by Jenkins, to analyse code pushed to GitHub using SonarQube. The artifacts were stored on Nexus.
 
-## Getting Started
+## Deploying the program
 
 1) Clone the repository to the desired client
 2) Open the project as a Maven project
@@ -30,17 +30,8 @@ java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
 
 In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.
 Additionaly, a MySQL instance must be set up (either locally or on the cloud), and the IP addresses, which are hardcoded in the IMS and DAO classes, must be changed to refer to said MySQL instance.
-```
-inside of the project folder, followed by
-```
-java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
-```
-in order to run it from your cmd window.
-It will ask you for a username and password - these are the details you have set in your MySQL databse.
 
-### Prerequisites
-
-### Installing
+### creating a development environment
 
 You will need to install
 Maven, Java, Git & Jenkins software and ensure they are up to date with the project.

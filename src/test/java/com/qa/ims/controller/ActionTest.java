@@ -54,13 +54,4 @@ public class ActionTest {
 		assertTrue(action.getDescription().toLowerCase().contains("calculates"));
 	}
 
-// TODO
-//	@Test
-//	public void getActionTest() {
-//		String actionName = "stop";
-//		Action action = Action.getAction();
-//		Mockito.doReturn(actionName).when(Action.getAction());
-//		assertTrue(action.getDescription().toLowerCase().contains("close"));
-//	}
-
 }

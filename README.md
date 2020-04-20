@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Coverage: 83.1% SonarQube, 
+=======
+Coverage:  93.5% JUnit coverage.
+>>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
 
 # Inventory Management System - QA Consultancy Individual Project
 
@@ -16,6 +20,7 @@ A CI Server was set up, managed by Jenkins, to analyse code pushed to GitHub usi
 
 ```
 mvn clean install
+<<<<<<< HEAD
 ```
 inside of the project folder, followed by
 ```
@@ -25,22 +30,47 @@ java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
 
 In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.
 Additionaly, a MySQL instance must be set up (either locally or on the cloud), and the IP addresses, which are hardcoded in the IMS and DAO classes, must be changed to refer to said MySQL instance.
+=======
+```
+inside of the project folder, followed by
+```
+java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
+```
+in order to run it from your cmd window.
+It will ask you for a username and password - these are the details you have set in your MySQL databse.
+>>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
+
+### Prerequisites
+
+In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.
+Additionaly, a MySQL instance must be set up (either locally or on the cloud), and the IP addresses, which are hardcoded in the IMS and DAO classes, must be changed to refer to said MySQL instance.
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+You will need to install
+Maven, Java, Git & Jenkins software and ensure they are up to date with the project.
 
-Say what the step will be
+1) Set up GCP MySQL instance. 
+2) Whitelist your public IP address for this instance.
+3) Clone this GitHub repository to your client.
+4) Set up a GitHub repository of your own
+5) Set the Origin to for the project to your GitHub repository
+6) Open the program as a Maven Project
+7) Change the hard-coded IP addresses in the src/main/java/com/qa/ims class, as well as the com/qa/ims/persistence/dao classes.
+8) Run the project, either from your IDE or as a fat .jar as mentioned above (mvn clean install, java -jar <name>.jar)
+9) Log in using your MySQL log in details.
 
+Linking it to a CI Pipeline:
+1) Set up SonarQube. You may want to do this in a GCP virtual machine.
+2) For ubuntu, this may be done using following commands in a ubuntu VM. Close the VM after entering the first command:
 ```
-Give the example
+curl https://gist.githubusercontent.com/christophperrins/760262e7308ceb8d9c51b4b984792a43/raw/00970ff2aa1857ab54f573f750c9f4f23d6c9578/installDocker.sh | sh
 ```
-
-And repeat
-
+exit, then open again
 ```
-until finished
+curl https://gist.githubusercontent.com/christophperrins/fa5155359f8808a83fee7e34abb21769/raw/10f8cee4968fe76510b9e6a04cb6c679be92b466/installSonaqubeWithDocker.sh | sh
 ```
+<<<<<<< HEAD
 
 End with an example of getting some data out of the system or using it for a little demo
 
@@ -54,28 +84,44 @@ Explain how to run the automated tests for this system. Break down into which te
 
 Explain what these tests test, why and how to run them
 
+=======
+3) Whitelist your IP address and Port in the VM's network settings.
+
+4) open jenkins (localhost)
+5) log in with the password provided int he jenkins settings folder. You may want to change this later.
+6) create a new freestyle project
+7) click configure
+8) link it to your GitHub repository in the source management section
+9) in the scm section, check the poll scm box
+10) switch on options to abort build when stuck
+11) build your program with Maven by adding following batch commands:
+>>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
 ```
-Give an example
+mvn clean package test
 ```
-
-### Integration Tests 
-Explain what these tests test, why and how to run them
-
+12) upload it to SonarQube (replace IP with your SonarQube VM instance or the like) do NOT use new lines as in example
 ```
-Give an example
+	mvn sonar:sonar
+		--define sonar.host.url=http://<yourSonarqubeVirtualMachineIPAddress>:9000
+		--define sonar.login.admin=admin
+		--define sonar.password=admin
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
-
+13) to deploy an artifact to nexus
 ```
-Give an example
+	mvn deploy:deploy-file
+		--define generatePom=false 
+		--define pomFile=pom.xml 
+		--define url=<yourSonarqubeVirtualMachineIPAddress>:8081/repository/maven-snapshots 
+		--define file=target/<artifactId>-<descriptorRef>.jar (the name of the fat jar in /target following build step)
+		--define repositoryId=nexus
 ```
+14) You may now run the program using a compatible command line interface or your IDE. You can test it using JUnit by creating a new package, or do it automatically by creating a new Jenkins build. Review your code, which is uploaded to SonarQube for static analysis afterwards.
 
-## Deployment
+## Running the tests
 
-Add additional notes about how to deploy this on a live system
+SonarQube was used for static analysis, whereas JUnit, together with Mockito, were used to test the functionality of the program.
+Controller classes, Service classes, DAO classes and the Domains themselves all have their own tests. 
+Testing will drop the database and all information containing it! Be aware of this before running a test.
 
 ## Built With
 
@@ -94,8 +140,11 @@ We use [SemVer](http://semver.org/) for versioning.
 
 This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
 
+<<<<<<< HEAD
 ## Acknowledgments
 
 * Caroline Strasenburgh, helping me out with documentation
 
+=======
+>>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
 # IMSProject

@@ -109,7 +109,7 @@ Testing will drop the database and all information containing it! Be aware of th
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
-* **Korbinian Ring** - *all but first commit * - [KMRRingQA](https://github.com/KMRRingQA)
+* **Korbinian Ring** - *all but first commit* - [KMRRingQA](https://github.com/KMRRingQA)
 
 ## License
 

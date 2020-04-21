@@ -95,17 +95,17 @@ Testing will drop the database and all information containing it! Be aware of th
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [Jenkins](https://maven.apache.org/) - CI Pipeline scripter
-* [Eclipse](https://maven.apache.org/) - IDE
-* [SonarQube](https://maven.apache.org/) - static analysis
-* [Nexus](https://maven.apache.org/) - artifact repository
-* [Git](https://maven.apache.org/) - version control system
-* [GitHub](https://maven.apache.org/) - host of version control system
-* [Trello](https://maven.apache.org/) - planning, kanban
-* [MySQL](https://maven.apache.org/) - database language
-* [GCP](https://maven.apache.org/) - database host
-* [JUnit](https://maven.apache.org/) - Testing (see pom.xml)
-* [Mockito](https://maven.apache.org/) - Testing (see pom.xml)
+* [Jenkins](https://jenkins.io/) - CI Pipeline scripter
+* [Eclipse](https://www.eclipse.org/downloads/) - IDE
+* [SonarQube](https://www.sonarqube.org/) - static analysis
+* [Nexus](https://www.sonatype.com/product-nexus-repository/) - artifact repository
+* [Git](https://git-scm.com/) - version control system
+* [GitHub](https://github.com/) - host of version control system
+* [Trello](https://trello.com/) - planning, kanban
+* [MySQL](https://www.mysql.com/) - database language
+* [GCP](https://cloud.google.com/) - database host
+* [JUnit](https://junit.org/junit5/) - Testing (see pom.xml)
+* [Mockito](https://site.mockito.org/) - Testing (see pom.xml) 
 
 
 ## Authors

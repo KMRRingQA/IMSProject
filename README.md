@@ -7,6 +7,9 @@ The project is built on Maven using the Eclipse IDE, using JUnit & Mockito for t
 Version control was done using Git, with GitHub as host. 
 A CI Server was set up, managed by Jenkins, to analyse code pushed to GitHub using SonarQube. The artifacts were stored on Nexus.
 
+Folder containing Documentation includes presentation & Risk assessment.
+* [Trelo](https://trello.com/b/drVMqO2w/qainventoryproject) - Kanban board
+
 ## Deploying the program
 
 1) Clone the repository to the desired client

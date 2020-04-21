@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-Coverage: 83.1% SonarQube, 
-=======
-Coverage:  93.5% JUnit coverage.
->>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
+Coverage: 83.1% SonarQube, 93.5% JUnit 
 
 # Inventory Management System - QA Consultancy Individual Project
 
@@ -11,7 +7,10 @@ The project is built on Maven using the Eclipse IDE, using JUnit & Mockito for t
 Version control was done using Git, with GitHub as host. 
 A CI Server was set up, managed by Jenkins, to analyse code pushed to GitHub using SonarQube. The artifacts were stored on Nexus.
 
-## Getting Started
+Folder containing Documentation includes presentation & Risk assessment.
+* [Trelo](https://trello.com/b/drVMqO2w/qainventoryproject) - Kanban board
+
+## Deploying the program
 
 1) Clone the repository to the desired client
 2) Open the project as a Maven project
@@ -20,32 +19,22 @@ A CI Server was set up, managed by Jenkins, to analyse code pushed to GitHub usi
 
 ```
 mvn clean install
-<<<<<<< HEAD
 ```
 inside of the project folder, followed by
 ```
 java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
 ```
-### Prerequisites
-
-In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.
-Additionaly, a MySQL instance must be set up (either locally or on the cloud), and the IP addresses, which are hardcoded in the IMS and DAO classes, must be changed to refer to said MySQL instance.
-=======
-```
-inside of the project folder, followed by
-```
-java -jar target/KorbinianRing-SoftwareMarch16-jar-with-dependencies.jar
-```
-in order to run it from your cmd window.
-It will ask you for a username and password - these are the details you have set in your MySQL databse.
->>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
-
+5) Development environmentshould be separate from actual database, having its own MySQL instance, since
+	1) the database is reset every time tests are run
+	2) MySQL login details are hard coded into the test files.
+6) you should delete/modify the Tests in order to prevent this.
+	
 ### Prerequisites
 
 In order to run the program from the command line, Maven must be used to create a jar containing the dependencies.
 Additionaly, a MySQL instance must be set up (either locally or on the cloud), and the IP addresses, which are hardcoded in the IMS and DAO classes, must be changed to refer to said MySQL instance.
 
-### Installing
+### creating a development environment
 
 You will need to install
 Maven, Java, Git & Jenkins software and ensure they are up to date with the project.
@@ -70,23 +59,7 @@ exit, then open again
 ```
 curl https://gist.githubusercontent.com/christophperrins/fa5155359f8808a83fee7e34abb21769/raw/10f8cee4968fe76510b9e6a04cb6c679be92b466/installSonaqubeWithDocker.sh | sh
 ```
-<<<<<<< HEAD
-
-End with an example of getting some data out of the system or using it for a little demo
-
-
-
-## Running the tests
-
-Explain how to run the automated tests for this system. Break down into which tests and what they do
-
-### Unit Tests 
-
-Explain what these tests test, why and how to run them
-
-=======
 3) Whitelist your IP address and Port in the VM's network settings.
-
 4) open jenkins (localhost)
 5) log in with the password provided int he jenkins settings folder. You may want to change this later.
 6) create a new freestyle project
@@ -95,7 +68,6 @@ Explain what these tests test, why and how to run them
 9) in the scm section, check the poll scm box
 10) switch on options to abort build when stuck
 11) build your program with Maven by adding following batch commands:
->>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
 ```
 mvn clean package test
 ```
@@ -126,25 +98,26 @@ Testing will drop the database and all information containing it! Be aware of th
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
+* [Jenkins](https://jenkins.io/) - CI Pipeline scripter
+* [Eclipse](https://www.eclipse.org/downloads/) - IDE
+* [SonarQube](https://www.sonarqube.org/) - static analysis
+* [Nexus](https://www.sonatype.com/product-nexus-repository/) - artifact repository
+* [Git](https://git-scm.com/) - version control system
+* [GitHub](https://github.com/) - host of version control system
+* [Trello](https://trello.com/) - planning, kanban
+* [MySQL](https://www.mysql.com/) - database language
+* [GCP](https://cloud.google.com/) - database host
+* [JUnit](https://junit.org/junit5/) - Testing (see pom.xml)
+* [Mockito](https://site.mockito.org/) - Testing (see pom.xml) 
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
-* **Korbinian Ring** - *all but first commit * - [KMRRingQA](https://github.com/KMRRingQA)
+* **Korbinian Ring** - *all but first commit* - [KMRRingQA](https://github.com/KMRRingQA)
 
 ## License
 
 This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
 
-<<<<<<< HEAD
-## Acknowledgments
-
-* Caroline Strasenburgh, helping me out with documentation
-
-=======
->>>>>>> 79c9e64a74836ef3833934ed38adba5a6deecee3
 # IMSProject
